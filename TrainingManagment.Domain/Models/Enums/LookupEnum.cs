@@ -55,15 +55,15 @@ namespace TrainingManagement.Domain.Models.Enums
         public enum Year
         {
             
-            Year2023=1,
-            Year2024=2,
-            Year2025=3,
-            Year2026=4,
-            Year2027=5,
-            Year2028=6,
-            Year2029=7,
-            Year2030=8,
-            Year2031=9,
+            Year2023= 2023,
+            Year2024= 2024,
+            Year2025= 2025,
+            Year2026= 2026,
+            Year2027= 2027,
+            Year2028= 2028,
+            Year2029= 2029,
+            Year2030= 2030,
+            Year2031=2031,
         }
     }
 }

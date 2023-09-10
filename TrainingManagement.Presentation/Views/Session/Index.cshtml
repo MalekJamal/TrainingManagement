@@ -138,7 +138,7 @@
 <div class="row">
     <div>
         <a asp-action="Create" class="btn btn-dark m-4">Create New Session</a>
-        <a asp-action="Update" class="btn btn-dark m-4">Update Current Session</a>
+        <a asp-action="UpdateCurrent" asp-route-year="@DateTime.Now.Year" class="btn btn-dark m-4">Update Current Session</a>
     </div>
 </div>
 
@@ -194,14 +194,16 @@
                                asp-route-id="@session.SessionId">
                                 <i class="bi bi-eye-fill text-black-50"></i>
                             </a>
-                            <a asp-controller="Session" asp-action="Edit" class="mx-2 text-decoration-none"
+                            <a asp-controller="Session" asp-action="Update" class="mx-2 text-decoration-none"
                                asp-route-id="@session.SessionId">
                                 <i class="bi bi-pencil-fill text-black-50"></i>
                             </a>
+
                             <a asp-controller="Session" asp-action="Delete" class="mx-2 text-decoration-none"
                                asp-route-id="@session.SessionId">
-                                <i class="bi bi-trash3 text-black-50"></i>
+                                <i class="bi bi-trash text-black-50"></i>
                             </a>
+
                         </div>
                     </td>
                 </tr>
@@ -210,27 +212,6 @@
     </tbody>
 </table>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Get the form element by its ID
-        var form = document.getElementById('searchForm');
-
-        // Add a submit event listener to the form
-        form.addEventListener('submit', function (event) {
-            // Check if at least one input is filled
-            var inputs = form.querySelectorAll('input[type=text], input[type=date], select');
-            var atLeastOneFilled = Array.from(inputs).some(function (input) {
-                return input.value.trim() !== '';
-            });
-
-            // If no input is filled, prevent form submission
-            if (!atLeastOneFilled) {
-                alert('Please fill at least one input.');
-                event.preventDefault(); // Prevent form submission
-            }
-        });
-    });
-</script>
 
 
 @section Scripts{

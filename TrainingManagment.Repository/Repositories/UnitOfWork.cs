@@ -12,13 +12,15 @@ namespace TrainingManagement.Repository.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        public IBaseRepository<Session> Sessions { get; private set; }
+        //public IBaseRepository<Session> Sessions { get; private set; }
+        public ISessionsRepository Sessions { get; private set; }
         // add more interfaces
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            Sessions = new BaseRepository<Session>(_context);
+            //Sessions = new BaseRepository<Session>(_context);
+            Sessions = new SessionsRepository(_context);
         }
 
 

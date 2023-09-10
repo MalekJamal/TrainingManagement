@@ -1,0 +1,381 @@
+﻿@model Session
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">
+                Update Session
+            </h2>
+            <hr />
+        </div>
+        <hr />
+        <form id="form">
+        <div class="row">
+            <div class="col-md-6">
+        <div class="mb-3">
+                    <label asp-for="Year"></label>
+            <input asp-for="Year" id="Year" class="form-control" disabled value="@DateTime.Now.Year"/>
+            
+        </div>
+                <div class="mb-3">
+                    <label asp-for="TraineeName"></label>
+                <input asp-for="TraineeName" id="TraineeName" class="form-control" />
+                    <span asp-validation-for="TraineeName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="TrainerName"></label>
+                <select asp-for="TrainerName" id="TrainerName" class="form-control">
+                    
+                        <option value="Khalid_Salameh">Khalid Salameh</option>
+                        <option value="Lamees_Hourani">Lamees Hourani</option>
+                        <option value="Mariam_AlSadawi">Mariam AlSadawi</option>
+                        <option value="Mohammad_Hamad">Mohammad Hamad</option>
+                        <option value="Mohammad_Ibdah">Mohammad Ibdah</option>
+                        <option value="Safaa">Safaa</option>
+                        <option value="Zakaria_Lafi">Zakaria Lafi</option>
+                        <option value="Ahmed_Sweilem">Ahmed Sweilem</option>
+                    </select>
+                    <span asp-validation-for="TrainerName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TrainingTopic"></label>
+                <select asp-for="TrainingTopic" id="TrainingTopic" class="form-control">
+                    <option value="DotNet">.Net</option>
+                        <option value="Business_Analyst">Business Analyst</option>
+                        <option value="Quality_Control">Quality Control</option>
+                        <option value="Infrastructure">Infrastructure</option>
+                        <option value="UI_UX">UI/UX</option>
+                        <option value="Human_Resources">Human Resources</option>
+                        <option value="Finance">Finance</option>
+                        <option value="AI">AI</option>
+                    </select>
+                    <span asp-validation-for="TrainingTopic" class="text-danger"></span>
+                </div>
+
+
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 form-select">
+                    <label asp-for="TrainingType"></label>
+                <select asp-for="TrainingType" id="TrainingType" class="form-control">
+                    <option value="Work">Work</option>
+                    <option value="University">University</option>
+                    </select>
+                    <span asp-validation-for="TrainingType" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="StartDate"></label>
+                <input asp-for="StartDate" id="StartDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ExpectedEndDate"></label>
+                <input asp-for="ExpectedEndDate" id="ExpectedEndDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="ExpectedEndDate" class="text-danger"></span>
+                </div>
+            </div>
+            @*Should be Moved*@
+            <input asp-for="CreatedBy" type="hidden" class="form-control" value="Malek" />
+            <input asp-for="ModifyBy" type="hidden" class="form-control" value="Malek" />
+            <input asp-for="CreatedOn" type="hidden" class="form-control" value="@DateTime.Now" />
+            <input asp-for="ModifyOn" type="hidden" class="form-control" value="@DateTime.Now" />
+            <input asp-for="IsActive" type="hidden" class="form-control" value="@true" />
+            <input asp-for="IsDeleted" type="hidden" class="form-control" value="@false" />
+            <input asp-for="ActualEndDate" type="hidden" class="form-control" value="@DateTime.Now" />
+            <input asp-for="Status" type="hidden" class="form-control" value="@LookupEnum.Status.Active" />
+            <input asp-for="Result" type="hidden" class="form-control" value="@LookupEnum.Result.On_Hold" />
+
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" style="width: 150px;" id="add">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
+                    class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                        <path fill-rule="evenodd" 
+                        d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                    Add
+                </button>
+
+            </div>
+        </div>
+    </form>
+    </div>
+
+ 
+<table id="myTable" class="table table-bordered table-striped table-responsive table-hover w-100">
+    
+    <tbody class="w-100"></tbody>
+</table>
+
+<div>
+    <div>
+        <button type="button" id="save" class="btn btn-dark">Save</button>
+    </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        (function () {
+            var dataTable = $('#myTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "info": false,
+                "columns": [
+                    { "title": "Trainee Name" },
+                    { "title": "Trainer Name" },
+                    { "title": "Training Type" },
+                    { "title": "Start Date" },
+                    { "title": "Expected End Date" },
+                    { "title": "Status" },
+                    { "title": "" },
+                ]
+            });
+
+            $('#myTable').on('click', '.delete-button', function () {
+                var row = $(this).closest('tr');
+                dataTable.row(row).remove().draw();
+            });
+
+            $("#add").click(function () {
+                var traineeName = $('#TraineeName').val();
+                var trainerName = $('#TrainerName').val();
+                var trainingType = $('#TrainingType').val();
+                var startDate = $('#StartDate').val();
+                var expectedEndDate = $('#ExpectedEndDate').val();
+                var status = "Active";
+
+                dataTable.row.add([traineeName, trainerName, trainingType, startDate, expectedEndDate, status, '<button class="btn btn-danger delete-button">Delete</button>']).draw();
+
+                // Clear input fields
+                $('#TraineeName, #TrainerName, #TrainingType, #StartDate, #ExpectedEndDate').val('');
+            });
+
+            $('#save').click(function () {
+                var session = dataTable.rows().data().toArray();
+                var data = $("#form").serialize();
+
+                console.log(data);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CreateSession")',
+                    data: JSON.stringify(data),
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    success: function (response) {
+                        alert(response.message);
+                        dataTable.clear().draw();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+
+        })();
+    </script>
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ @*<script type="text/javascript">
+    var dataTable;
+    $(function () {
+        LoadData();
+
+
+    });
+
+    function LoadData() {
+        if (dataTable) {
+            dataTable.destroy(); // Destroy the existing DataTable (if any)
+        }
+
+        $.ajax({
+            type: 'get',
+            url: '@Url.Action("GetSessions")',
+            dataType: 'json',
+            data: { id: '' },
+            success: function (data) {
+                var items = '';
+                $.each(data, function (i, item) {
+                    // Parse date strings and format them to display only the date
+                    var startDate = new Date(item.startDate).toLocaleDateString();
+                    var endDate = new Date(item.expectedEndDate).toLocaleDateString();
+
+                    // Mapping for Trainer enum
+                    var trainerEnum = {
+                        1: 'Khalid Salameh',
+                        2: 'Lamees Hourani',
+                        3: 'Mariam AlSadawi',
+                        4: 'Mohammad Hamad',
+                        5: 'Mohammad Ibdah',
+                        6: 'Safaa',
+                        7: 'Zakaria Lafi',
+                        8: 'Ahmed Sweilem'
+                    };
+
+                    // Mapping for TrainingType enum
+                    var trainingTypeEnum = {
+                        1: 'Work',
+                        2: 'University'
+                    };
+
+                    // Mapping for Status enum
+                    var statusEnum = {
+                        1: 'Active',
+                        2: 'Pending',
+                        3: 'Finished'
+                    };
+                    // Convert enum numbers to names
+                    var trainerName = trainerEnum[item.trainerName];
+                    var trainingType = trainingTypeEnum[item.trainingType];
+                    var status = statusEnum[item.status];
+
+                    console.log(item.traineeName);
+                    var rows = "<tr>"
+                        + "<td>" + item.traineeName + "</td>"
+                        + "<td>" + trainerName + "</td>"
+                        + "<td>" + trainingType + "</td>"
+                        + "<td>" + startDate + "</td>"
+                        + "<td>" + endDate + "</td>"
+                        + "<td>" + status + "</td>"
+                        + "<td>" +
+                        "<button class='btn btn-warning btn-sm' onclick='editRecord(" + item.ID + ")'>Edit</button> " +
+                        "<button class='btn btn-danger btn-sm' onclick='deleteRecord(" + item.ID + ")'>Delete</button>" +
+                        "</td>"
+                        + "</tr>";
+                    $('#tblStudent tbody').append(rows);
+                });
+
+                // Initialize the DataTable with column headers
+                dataTable = $('#tblStudent').DataTable({
+                    "autoWidth": "true",
+                    "columns": [
+                        { "title": "Trainee Name" },
+                        { "title": "Trainer Name" },
+                        { "title": "Training Type" },
+                        { "title": "Start Date" },
+                        { "title": "Expected End Date" },
+                        { "title": "Status" },
+                        { "title": "" },
+                    ]
+                });
+            },
+            error: function (ex) {
+                var r = jQuery.parseJSON(response.responseText);
+                alert("Message: " + r.Message);
+                alert("StackTrace: " + r.StackTrace);
+                alert("ExceptionType: " + r.ExceptionType);
+            }
+        });
+
+        return false;
+    }
+
+    $("#btnSave").click(function () {
+
+        var session = {
+            TraineeName: $("#TraineeName").val(),
+            TrainerName: $("#TrainerName").val(),
+            TrainingTopic: $("#TrainingTopic").val(),
+            TrainingType: $("#TrainingType").val(),
+            StartDate: $("#StartDate").val(),
+            ExpectedEndDate: $("#ExpectedEndDate").val(),
+        };
+        console.log(JSON.stringify(session));
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateSession")',
+            data: JSON.stringify(session),
+            dataType: "json",
+            contentType: "application/json",
+            success: function () {
+                $("#TraineeName").val(""),
+                    $("#TrainerName").val(""),
+                    $("#TrainingTopic").val(""),
+                    $("#TrainingType").val(""),
+                    $("#StartDate").val(""),
+                    $("#ExpectedEndDate").val(""),
+                    LoadData(); // Reload data and update the DataTable
+            },
+            error: function (err) {
+
+                alert("Error while inserting data" + err);
+            }
+        });
+
+        return false;
+    });
+
+    function editRecord(id) {
+        // Implement the logic for editing a record with the given ID
+    }
+
+    function deleteRecord(id) {
+        // Implement the logic for deleting a record with the given ID
+    }
+
+</script>*@

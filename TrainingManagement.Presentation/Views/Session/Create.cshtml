@@ -53,7 +53,7 @@
                 </div>
                 <div class="mb-3">
                     <label asp-for="ExpectedEndDate"></label>
-                    <input asp-for="ExpectedEndDate" class="form-control" />
+                    <input asp-for="ExpectedEndDate" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="ExpectedEndDate" class="text-danger"></span>
                 </div>
             </div>

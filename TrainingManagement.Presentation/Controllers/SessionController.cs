@@ -7,6 +7,10 @@ using TrainingManagement.Repository.Interfaces;
 using TrainingManagement.Domain.Models;
 using TrainingManagement.Domain.ViewModels;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace TrainingManagement.Presentation.Controllers
 {
@@ -37,7 +41,7 @@ namespace TrainingManagement.Presentation.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while retrieving sessions.");
-                return View(nameof(ErrorViewModel));
+                return View();
             }
 
         }
@@ -72,9 +76,10 @@ namespace TrainingManagement.Presentation.Controllers
             try
             {
                 var exist = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.Year == (int)session.Year);
-                if(exist != null)
+                if(exist.Count() >0)
                 {
                     ModelState.AddModelError("Year", "This Year Already exist please update the session");
+                    return View();
                 }
                 // Call the repository layer to add the entity.
                 var result = await _unitOfWork.Sessions.AddAsync(session);
@@ -172,6 +177,104 @@ namespace TrainingManagement.Presentation.Controllers
             }
 
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult UpdateCurrent(int? year)
+        {
+            try
+            {
+                if (year == null || year == 0)
+                {
+                    return NotFound();
+                }
+
+                var sessions = _unitOfWork.Sessions.FindByYear(year);
+                var a = sessions.Select(x => x.Year);
+
+                return View(sessions[0]);
+                
+            }
+            catch (Exception ex)
+            {
+
+                // Log the exception.
+                _logger.LogError(ex, "An error occurred while Updating a session.");
+
+                // Handle the exception, display a generic error message, and possibly redirect to an error page.
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateCurrent(Session model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+
+            }
+            model.Year = LookupEnum.Year.Year2023;
+            _unitOfWork.Sessions.Update(model);
+            _unitOfWork.Complete();
+            return RedirectToAction("Index");
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetSessions()
+        {
+            try
+            {
+                var sessions = await _unitOfWork.Sessions.GetAllAsync();
+
+                if (sessions == null)
+                {
+                    return NotFound();
+
+                }
+              
+                return Json(sessions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while retrieving sessions.");
+                return View();
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateSession(Session session)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return Json(new { Message = " error" });
+            }
+
+            try
+            {
+                // Call the repository layer to add the entity.
+                //var result = await _unitOfWork.Sessions.AddAsync((Session)session);
+
+                // I will use _unitOfWork.Complete(), when add, update and delete from database
+                //int a = await _unitOfWork.Complete();
+                string message = "SUCCESS";
+                return Json(new { Message = message });
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception.
+                _logger.LogError(ex, "An error occurred while adding a session.");
+
+                // Handle the exception, display a generic error message, and possibly redirect to an error page.
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
+                return Json(session);
+            }
         }
     }
 }
