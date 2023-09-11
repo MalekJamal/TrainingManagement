@@ -11,6 +11,8 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using System.Data;
+using Newtonsoft.Json;
 
 namespace TrainingManagement.Presentation.Controllers
 {
@@ -192,7 +194,7 @@ namespace TrainingManagement.Presentation.Controllers
                 var sessions = _unitOfWork.Sessions.FindByYear(year);
                 var a = sessions.Select(x => x.Year);
 
-                return View(sessions[0]);
+                return View();
                 
             }
             catch (Exception ex)
@@ -247,7 +249,7 @@ namespace TrainingManagement.Presentation.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateSession([FromBody] List<SessionViewModel> sessions)
+        public async Task<IActionResult> CreateSession([FromBody] List<Object> sessions)
         {
             if (!ModelState.IsValid)
             {
@@ -256,6 +258,8 @@ namespace TrainingManagement.Presentation.Controllers
 
             try
             {
+
+                
                 // Call the repository layer to add the entity
                 // var result = await _unitOfWork.Sessions.AddAsync((Session)session);
 

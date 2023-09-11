@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using TrainingManagement.Domain.Models;
@@ -19,6 +20,19 @@ namespace TrainingManagement.Repository.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.HasDefaultSchema("TPS"); // to change the the name of the schema
+
+            // Rename the table names
+            modelBuilder.Entity<IdentityUser>().ToTable("Users", "Security");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles", "Security");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles", "Security");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims", "Security");
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins", "Security");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims", "Security");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens", "Security");
+
             // Define primary keys
             modelBuilder.Entity<Lookup>().HasKey(e => e.Id);
             modelBuilder.Entity<LookupCategory>().HasKey(e => e.CategoryId);
@@ -28,7 +42,6 @@ namespace TrainingManagement.Repository.Data
             // Seed data
             SeedData(modelBuilder);
 
-            base.OnModelCreating(modelBuilder);
         }
 
         private void SeedData(ModelBuilder modelBuilder)
