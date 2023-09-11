@@ -1,29 +1,27 @@
 ﻿@model Session
-    <div class="border p-3 mt-4">
-        <div class="row pb-2">
-            <h2 class="text-primary">
-                Update Session
-            </h2>
-            <hr />
-        </div>
+<div class="border p-3 mt-4">
+    <div class="row pb-2">
+        <h2 class="text-primary">
+            Update Session
+        </h2>
         <hr />
-        <form id="form">
+    </div>
+    <hr />
+    <form id="form">
         <div class="row">
             <div class="col-md-6">
-        <div class="mb-3">
+                <div class="mb-3">
                     <label asp-for="Year"></label>
-            <input asp-for="Year" id="Year" class="form-control" disabled value="@DateTime.Now.Year"/>
-            
-        </div>
+                    <input asp-for="Year" id="Year" class="form-control" disabled value="@DateTime.Now.Year" />
+                </div>
                 <div class="mb-3">
                     <label asp-for="TraineeName"></label>
-                <input asp-for="TraineeName" id="TraineeName" class="form-control" />
+                    <input asp-for="TraineeName" id="TraineeName" class="form-control" />
                     <span asp-validation-for="TraineeName" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="TrainerName"></label>
-                <select asp-for="TrainerName" id="TrainerName" class="form-control">
-                    
+                    <select asp-for="TrainerName" id="TrainerName" class="form-control">
                         <option value="Khalid_Salameh">Khalid Salameh</option>
                         <option value="Lamees_Hourani">Lamees Hourani</option>
                         <option value="Mariam_AlSadawi">Mariam AlSadawi</option>
@@ -38,8 +36,8 @@
 
                 <div class="mb-3">
                     <label asp-for="TrainingTopic"></label>
-                <select asp-for="TrainingTopic" id="TrainingTopic" class="form-control">
-                    <option value="DotNet">.Net</option>
+                    <select asp-for="TrainingTopic" id="TrainingTopic" class="form-control">
+                        <option value="DotNet">.Net</option>
                         <option value="Business_Analyst">Business Analyst</option>
                         <option value="Quality_Control">Quality Control</option>
                         <option value="Infrastructure">Infrastructure</option>
@@ -50,73 +48,57 @@
                     </select>
                     <span asp-validation-for="TrainingTopic" class="text-danger"></span>
                 </div>
-
-
             </div>
             <div class="col-md-6">
                 <div class="mb-3 form-select">
                     <label asp-for="TrainingType"></label>
-                <select asp-for="TrainingType" id="TrainingType" class="form-control">
-                    <option value="Work">Work</option>
-                    <option value="University">University</option>
+                    <select asp-for="TrainingType" id="TrainingType" class="form-control">
+                        <option value="Work">Work</option>
+                        <option value="University">University</option>
                     </select>
                     <span asp-validation-for="TrainingType" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="StartDate"></label>
-                <input asp-for="StartDate" id="StartDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <input asp-for="StartDate" id="StartDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="StartDate" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="ExpectedEndDate"></label>
-                <input asp-for="ExpectedEndDate" id="ExpectedEndDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <input asp-for="ExpectedEndDate" id="ExpectedEndDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="ExpectedEndDate" class="text-danger"></span>
                 </div>
             </div>
-            @*Should be Moved*@
-            <input asp-for="CreatedBy" type="hidden" class="form-control" value="Malek" />
-            <input asp-for="ModifyBy" type="hidden" class="form-control" value="Malek" />
-            <input asp-for="CreatedOn" type="hidden" class="form-control" value="@DateTime.Now" />
-            <input asp-for="ModifyOn" type="hidden" class="form-control" value="@DateTime.Now" />
-            <input asp-for="IsActive" type="hidden" class="form-control" value="@true" />
-            <input asp-for="IsDeleted" type="hidden" class="form-control" value="@false" />
-            <input asp-for="ActualEndDate" type="hidden" class="form-control" value="@DateTime.Now" />
-            <input asp-for="Status" type="hidden" class="form-control" value="@LookupEnum.Status.Active" />
-            <input asp-for="Result" type="hidden" class="form-control" value="@LookupEnum.Result.On_Hold" />
-
-        </div>
-        <div class="row mt-3">
             <div class="col-md-12">
                 <button type="button" class="btn btn-primary" style="width: 150px;" id="add">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" 
-                    class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-person-plus-fill" viewBox="0 0 16 16">
                         <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                        <path fill-rule="evenodd" 
-                        d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                        <path fill-rule="evenodd"
+                              d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
                     </svg>
                     Add
                 </button>
-
             </div>
         </div>
     </form>
-    </div>
+</div>
 
- 
 <table id="myTable" class="table table-bordered table-striped table-responsive table-hover w-100">
-    
     <tbody class="w-100"></tbody>
 </table>
 
 <div>
     <div>
-        <button type="button" id="save" class="btn btn-dark">Save</button>
+        <button type="button" id="save" name="save" class="btn btn-dark">Save</button>
     </div>
 </div>
+
 @section Scripts
-{
+    {
     <script type="text/javascript">
+
         (function () {
             var dataTable = $('#myTable').DataTable({
                 "paging": true,
@@ -152,19 +134,29 @@
                 $('#TraineeName, #TrainerName, #TrainingType, #StartDate, #ExpectedEndDate').val('');
             });
 
-            $('#save').click(function () {
-                var session = dataTable.rows().data().toArray();
-                var data = $("#form").serialize();
-
-                console.log(data);
-
+            $("#save").click(function () {
+                var sessions = [];
+                var tableData = dataTable.rows().data().toArray();
+                for (var i = 0; i < tableData.length; i++) {
+                    var session = {
+                        TraineeName: tableData[i][0],
+                        TrainerName: tableData[i][1],
+                        TrainingType: tableData[i][2],
+                        StartDate: tableData[i][3],
+                        ExpectedEndDate: tableData[i][4]
+                    };
+                    sessions.push(session);
+                }
+                
+                console.log(sessions);
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("CreateSession")',
-                    data: JSON.stringify(data),
-                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    traditional: true, // Ensure data is sent as an array
+                    contentType: 'application/json',
+                    data: JSON.stringify(sessions),
                     success: function (response) {
-                        alert(response.message);
+                        alert(response);
                         dataTable.clear().draw();
                     },
                     error: function (xhr, status, error) {
@@ -173,12 +165,63 @@
                 });
             });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+            $("#save9").click(function () {
+                saveSessions(); // Call the saveSessions function
+            });
+
+            function saveSessions() {
+                var listOfSessions = [];
+                var tableData = dataTable.rows().data().toArray();
+                for (var i = 0; i < tableData.length; i++) {
+                    var session = {
+                        TraineeName: tableData[i][0],
+                        TrainerName: tableData[i][1],
+                        TrainingType: tableData[i][2],
+                        StartDate: tableData[i][3],
+                        ExpectedEndDate: tableData[i][4]
+                    };
+                    listOfSessions.push(session);
+                }
+
+                // Use the correct property name (sessions) in the data object
+                var dataToSend = JSON.stringify(listOfSessions);
+
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    url: '@Url.Action("CreateSession")',
+                    data: dataToSend,
+                    success: function (data) {
+                        alert(data.Message); // Assuming the message is sent as "Message" property
+                    },
+                    error: function () {
+                        alert("Something went wrong");
+                    }
+                });
+            }
+
         })();
-    </script>
 
 
-
+</script>
 }
+
+
 
 
 

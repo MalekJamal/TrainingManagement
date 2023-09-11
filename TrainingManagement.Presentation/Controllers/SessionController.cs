@@ -247,24 +247,22 @@ namespace TrainingManagement.Presentation.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateSession(Session session)
+        public async Task<IActionResult> CreateSession([FromBody] List<SessionViewModel> sessions)
         {
-
             if (!ModelState.IsValid)
             {
-                return Json(new { Message = " error" });
+                return Json(new { Message = "Error" });
             }
 
             try
             {
-                // Call the repository layer to add the entity.
-                //var result = await _unitOfWork.Sessions.AddAsync((Session)session);
+                // Call the repository layer to add the entity
+                // var result = await _unitOfWork.Sessions.AddAsync((Session)session);
 
-                // I will use _unitOfWork.Complete(), when add, update and delete from database
-                //int a = await _unitOfWork.Complete();
+                // I will use _unitOfWork.Complete(), when add, update and delete from the database
+                // int a = await _unitOfWork.Complete();
                 string message = "SUCCESS";
                 return Json(new { Message = message });
-
             }
             catch (Exception ex)
             {
@@ -273,8 +271,9 @@ namespace TrainingManagement.Presentation.Controllers
 
                 // Handle the exception, display a generic error message, and possibly redirect to an error page.
                 ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
-                return Json(session);
+                return Json(new { Message = "Something went wrong" });
             }
         }
+
     }
 }
