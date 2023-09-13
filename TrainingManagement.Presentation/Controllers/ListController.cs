@@ -18,37 +18,18 @@ namespace TrainingManagement.Presentation.Controllers
         [HttpGet]
         public IActionResult Topics()
         {
-            var pageSize = 6;
-            var skip = 1;
-
-
-            //var sortColumn = Request.Form[string.Concat("columns[", Request.Form["order[0][column]"], "][name]")];
-            //var sortColumnDirection = Request.Form["order[0][dir]"];
-            List<Lookup> topics = new List<Lookup>();
-
-            topics = _lookup.GetAllTopics();
-
-
-            var data = topics.Skip(skip).Take(pageSize).ToList();
-
-            var recordsTotal = topics.Count();
-
-            var jsonData = new { recordsFiltered = recordsTotal, recordsTotal, data };
-
-            return Json(jsonData);
-
+            return View();
         }
 
+        [HttpGet]
         public IActionResult Types()
         {
-            List<Lookup> types = _lookup.GetAllTypes();
-            return View(types);
+            return View();
         }
 
+        [HttpGet]
         public IActionResult Trainers()
         {
-            List<Lookup> trainers = _lookup.GetAllTrainer();
-
             return View();
         }
     }

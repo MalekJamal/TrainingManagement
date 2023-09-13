@@ -1,7 +1,4 @@
-﻿<link href="~/datatables/css/datatables.bootstrap4.css" rel="stylesheet" />
-<link href="~/datatables/css/datatables.bootstrap4.min.css" rel="stylesheet" />
-
-<div class="container">
+﻿<div class="container">
     <h3 class="text-primary ">Topics </h3>
     <hr />
 
@@ -15,36 +12,44 @@
     {
 
     <script type="text/javascript">
-        var dataTable;
+        var dataTable; // Declare the DataTable variable globally
 
         $(function () {
             LoadData();
         });
 
         function LoadData() {
-            debugger;
             if (dataTable) {
                 dataTable.destroy(); // Destroy the existing DataTable (if any)
             }
 
             $.ajax({
                 type: 'get',
-                url: '@Url.Action("Topics")',
+                url: '/api/ListApi/Topics',
                 dataType: 'json',
                 data: { id: '' },
                 success: function (data) {
-                    // Initialize the DataTable with column headers and data
+                    var items = '';
+                    $.each(data, function (i, item) {
+                        var rows = "<tr>"
+                            + "<td>" + item.id + "</td>"
+                            + "<td>" + item.nameEn+ "</td>"
+                            + "</tr>";
+                        $('#myTable tbody').append(rows);
+                    });
+
+                    // Initialize the DataTable with column headers
                     dataTable = $('#myTable').DataTable({
-                        "autoWidth": true, // Remove quotes around true
-                        "data": data, // Provide the data directly
+                        "autoWidth": "true",
+                        "paging": "true",
                         "columns": [
-                            { "data": "Id", "title": "Topic Id" },
-                            { "data": "NameEn", "title": "Topic Name" },
+                            { "title": "Topic ID" },
+                            { "title": "Topic Name" },
                         ]
                     });
                 },
                 error: function (ex) {
-                    alert('Somthing went wrong!');
+                    alert(ex);
                 }
             });
 
