@@ -136,18 +136,27 @@
 
             $("#save").click(function () {
                 var sessions = [];
-                var tableData = dataTable.rows().data().toArray();
+                var tableData = dataTable.rows().data();
                 for (var i = 0; i < tableData.length; i++) {
-                    var session = {
+                    
+                    sessions.push({
                         TraineeName: tableData[i][0],
                         TrainerName: tableData[i][1],
                         TrainingType: tableData[i][2],
                         StartDate: tableData[i][3],
                         ExpectedEndDate: tableData[i][4]
-                    };
-                    sessions.push(session);
+                    });
                 }
-                
+            //    sessionData.push({
+            //        TraineeName: traineeName,
+            //        StTrainerName: trainerName,
+            //        TrainerNameId: trainerId,
+            //        TrainingTopicId: topic,
+            //        TrainingTypeId: type,
+            //        StartDate: startDate,
+            //        ExpectedEndDate: endDate
+            //    });
+            //});
                 console.log(sessions);
                 $.ajax({
                     type: 'POST',

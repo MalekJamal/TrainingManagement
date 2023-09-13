@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using TrainingManagement.Domain.Models;
-using TrainingManagement.Domain.Models.Enums;
+using TrainingManagment.Domain.Models;
+using TrainingManagment.Domain.Models.Enums;
 
-namespace TrainingManagement.Domain.ViewModels
+namespace TrainingManagment.Domain.ViewModels
 {
     public class SessionViewModel
     {

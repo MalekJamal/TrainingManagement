@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TrainingManagement.Repository.Data;
+using TrainingManagment.Repository.Data;
 
-namespace TrainingSystem.EF.Migrations
+namespace TrainingManagment.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230911112901_EditIdentityTableNames")]
@@ -223,7 +223,7 @@ namespace TrainingSystem.EF.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.Lookup", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.Lookup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -752,7 +752,7 @@ namespace TrainingSystem.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.LookupCategory", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.LookupCategory", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -878,7 +878,7 @@ namespace TrainingSystem.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.Session", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.Session", b =>
                 {
                     b.Property<int>("SessionId")
                         .ValueGeneratedOnAdd()
@@ -975,7 +975,7 @@ namespace TrainingSystem.EF.Migrations
                     b.ToTable("Session");
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.User", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -1036,9 +1036,9 @@ namespace TrainingSystem.EF.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.Lookup", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.Lookup", b =>
                 {
-                    b.HasOne("TrainingManagement.Domain.Models.LookupCategory", "LookupCategory")
+                    b.HasOne("TrainingManagment.Domain.Models.LookupCategory", "LookupCategory")
                         .WithMany("Lookups")
                         .HasForeignKey("LookupCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1047,25 +1047,25 @@ namespace TrainingSystem.EF.Migrations
                     b.Navigation("LookupCategory");
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.Session", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.Session", b =>
                 {
-                    b.HasOne("TrainingManagement.Domain.Models.Lookup", "ResultLookup")
+                    b.HasOne("TrainingManagment.Domain.Models.Lookup", "ResultLookup")
                         .WithMany()
                         .HasForeignKey("ResultLookupId");
 
-                    b.HasOne("TrainingManagement.Domain.Models.Lookup", "StatusLookup")
+                    b.HasOne("TrainingManagment.Domain.Models.Lookup", "StatusLookup")
                         .WithMany()
                         .HasForeignKey("StatusLookupId");
 
-                    b.HasOne("TrainingManagement.Domain.Models.Lookup", "TrainerLookup")
+                    b.HasOne("TrainingManagment.Domain.Models.Lookup", "TrainerLookup")
                         .WithMany()
                         .HasForeignKey("TrainerLookupId");
 
-                    b.HasOne("TrainingManagement.Domain.Models.Lookup", "TrainingTopicLookup")
+                    b.HasOne("TrainingManagment.Domain.Models.Lookup", "TrainingTopicLookup")
                         .WithMany()
                         .HasForeignKey("TrainingTopicLookupId");
 
-                    b.HasOne("TrainingManagement.Domain.Models.Lookup", "TrainingTypeLookup")
+                    b.HasOne("TrainingManagment.Domain.Models.Lookup", "TrainingTypeLookup")
                         .WithMany()
                         .HasForeignKey("TrainingTypeLookupId");
 
@@ -1080,7 +1080,7 @@ namespace TrainingSystem.EF.Migrations
                     b.Navigation("TrainingTypeLookup");
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.LookupCategory", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.LookupCategory", b =>
                 {
                     b.Navigation("Lookups");
                 });

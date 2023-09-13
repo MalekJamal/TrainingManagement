@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TrainingSystem.EF.Migrations
+namespace TrainingManagment.Repository.Migrations
 {
     public partial class AddDB : Migration
     {

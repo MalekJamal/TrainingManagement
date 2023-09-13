@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TrainingManagement.Repository.Data;
+using TrainingManagment.Repository.Data;
 
-namespace TrainingSystem.EF.Migrations
+namespace TrainingManagment.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -68,77 +68,6 @@ namespace TrainingSystem.EF.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RoleClaims", "Security");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("Users", "Security");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -221,7 +150,7 @@ namespace TrainingSystem.EF.Migrations
                     b.ToTable("UserTokens", "Security");
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.Lookup", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.Lookup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -277,7 +206,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 1,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1091),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3219),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -291,7 +220,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 2,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1646),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3548),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -305,7 +234,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 3,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1655),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3554),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -319,7 +248,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 4,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1659),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3557),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -333,7 +262,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 5,
                             Code = 3,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1663),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3562),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -347,7 +276,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 6,
                             Code = 4,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1668),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3564),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -361,7 +290,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 7,
                             Code = 5,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1671),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3566),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -375,7 +304,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 8,
                             Code = 6,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1674),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3568),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -389,7 +318,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 9,
                             Code = 7,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1678),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3571),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -403,7 +332,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 10,
                             Code = 8,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1681),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3573),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -417,7 +346,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 11,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1686),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3575),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -431,7 +360,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 12,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1689),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3578),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -445,7 +374,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 13,
                             Code = 3,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1692),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3580),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -459,7 +388,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 14,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1696),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3582),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -473,7 +402,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 15,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1699),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3584),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -487,7 +416,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 16,
                             Code = 3,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1702),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3586),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -501,7 +430,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 17,
                             Code = 4,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1706),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3588),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -515,7 +444,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 18,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1709),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3592),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -529,7 +458,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 19,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1713),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3594),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -543,7 +472,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 20,
                             Code = 3,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1716),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3596),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -557,7 +486,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 21,
                             Code = 4,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1719),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3599),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -571,7 +500,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 22,
                             Code = 5,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1723),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3601),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -585,7 +514,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 23,
                             Code = 6,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1726),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3603),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -599,7 +528,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 24,
                             Code = 7,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1729),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3605),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -613,7 +542,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 25,
                             Code = 8,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1733),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3608),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -627,7 +556,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 26,
                             Code = 2023,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1737),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3610),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -641,7 +570,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 27,
                             Code = 2024,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1740),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3612),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -655,7 +584,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 28,
                             Code = 2025,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1743),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3614),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -669,7 +598,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 29,
                             Code = 2026,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1746),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3616),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -683,7 +612,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 30,
                             Code = 2027,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1750),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3619),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -697,7 +626,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 31,
                             Code = 2028,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1753),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3621),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -711,7 +640,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 32,
                             Code = 2029,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1756),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3623),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -725,7 +654,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 33,
                             Code = 2030,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1760),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3626),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -739,7 +668,7 @@ namespace TrainingSystem.EF.Migrations
                             Id = 34,
                             Code = 2031,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 981, DateTimeKind.Local).AddTicks(1763),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 250, DateTimeKind.Local).AddTicks(3628),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -750,7 +679,7 @@ namespace TrainingSystem.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.LookupCategory", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.LookupCategory", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -801,7 +730,7 @@ namespace TrainingSystem.EF.Migrations
                             CategoryId = 100,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 977, DateTimeKind.Local).AddTicks(8173),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 247, DateTimeKind.Local).AddTicks(6074),
                             Description = "Training Type That TPS Provided",
                             IsActive = true,
                             IsDeleted = false,
@@ -814,7 +743,7 @@ namespace TrainingSystem.EF.Migrations
                             CategoryId = 200,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 979, DateTimeKind.Local).AddTicks(3504),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 248, DateTimeKind.Local).AddTicks(8571),
                             Description = "Training Topics That TPS Provided",
                             IsActive = true,
                             IsDeleted = false,
@@ -827,7 +756,7 @@ namespace TrainingSystem.EF.Migrations
                             CategoryId = 300,
                             Code = 3,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 979, DateTimeKind.Local).AddTicks(3559),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 248, DateTimeKind.Local).AddTicks(8599),
                             Description = "Training Status",
                             IsActive = true,
                             IsDeleted = false,
@@ -840,7 +769,7 @@ namespace TrainingSystem.EF.Migrations
                             CategoryId = 400,
                             Code = 4,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 979, DateTimeKind.Local).AddTicks(3566),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 248, DateTimeKind.Local).AddTicks(8603),
                             Description = "Training Result",
                             IsActive = true,
                             IsDeleted = false,
@@ -853,7 +782,7 @@ namespace TrainingSystem.EF.Migrations
                             CategoryId = 500,
                             Code = 5,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 979, DateTimeKind.Local).AddTicks(3797),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 248, DateTimeKind.Local).AddTicks(8605),
                             Description = "Trainer Name",
                             IsActive = true,
                             IsDeleted = false,
@@ -866,7 +795,7 @@ namespace TrainingSystem.EF.Migrations
                             CategoryId = 600,
                             Code = 6,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 11, 14, 33, 30, 979, DateTimeKind.Local).AddTicks(3801),
+                            CreatedOn = new DateTime(2023, 9, 12, 7, 55, 39, 248, DateTimeKind.Local).AddTicks(8607),
                             Description = "Training Year That TPS Provided",
                             IsActive = true,
                             IsDeleted = false,
@@ -876,7 +805,7 @@ namespace TrainingSystem.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.Session", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.Session", b =>
                 {
                     b.Property<int>("SessionId")
                         .ValueGeneratedOnAdd()
@@ -973,14 +902,77 @@ namespace TrainingSystem.EF.Migrations
                     b.ToTable("Session");
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.User", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.User", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FullName")
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("User");
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("ProfilePicture")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("Users", "Security");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -994,7 +986,7 @@ namespace TrainingSystem.EF.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("TrainingManagment.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1003,7 +995,7 @@ namespace TrainingSystem.EF.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("TrainingManagment.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1018,7 +1010,7 @@ namespace TrainingSystem.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("TrainingManagment.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1027,16 +1019,16 @@ namespace TrainingSystem.EF.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("TrainingManagment.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.Lookup", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.Lookup", b =>
                 {
-                    b.HasOne("TrainingManagement.Domain.Models.LookupCategory", "LookupCategory")
+                    b.HasOne("TrainingManagment.Domain.Models.LookupCategory", "LookupCategory")
                         .WithMany("Lookups")
                         .HasForeignKey("LookupCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1045,25 +1037,25 @@ namespace TrainingSystem.EF.Migrations
                     b.Navigation("LookupCategory");
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.Session", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.Session", b =>
                 {
-                    b.HasOne("TrainingManagement.Domain.Models.Lookup", "ResultLookup")
+                    b.HasOne("TrainingManagment.Domain.Models.Lookup", "ResultLookup")
                         .WithMany()
                         .HasForeignKey("ResultLookupId");
 
-                    b.HasOne("TrainingManagement.Domain.Models.Lookup", "StatusLookup")
+                    b.HasOne("TrainingManagment.Domain.Models.Lookup", "StatusLookup")
                         .WithMany()
                         .HasForeignKey("StatusLookupId");
 
-                    b.HasOne("TrainingManagement.Domain.Models.Lookup", "TrainerLookup")
+                    b.HasOne("TrainingManagment.Domain.Models.Lookup", "TrainerLookup")
                         .WithMany()
                         .HasForeignKey("TrainerLookupId");
 
-                    b.HasOne("TrainingManagement.Domain.Models.Lookup", "TrainingTopicLookup")
+                    b.HasOne("TrainingManagment.Domain.Models.Lookup", "TrainingTopicLookup")
                         .WithMany()
                         .HasForeignKey("TrainingTopicLookupId");
 
-                    b.HasOne("TrainingManagement.Domain.Models.Lookup", "TrainingTypeLookup")
+                    b.HasOne("TrainingManagment.Domain.Models.Lookup", "TrainingTypeLookup")
                         .WithMany()
                         .HasForeignKey("TrainingTypeLookupId");
 
@@ -1078,7 +1070,7 @@ namespace TrainingSystem.EF.Migrations
                     b.Navigation("TrainingTypeLookup");
                 });
 
-            modelBuilder.Entity("TrainingManagement.Domain.Models.LookupCategory", b =>
+            modelBuilder.Entity("TrainingManagment.Domain.Models.LookupCategory", b =>
                 {
                     b.Navigation("Lookups");
                 });

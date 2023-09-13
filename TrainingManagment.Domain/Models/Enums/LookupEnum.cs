@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace TrainingManagement.Domain.Models.Enums
+namespace TrainingManagment.Domain.Models.Enums
 {
     public static class LookupEnum
     {

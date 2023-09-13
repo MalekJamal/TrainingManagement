@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TrainingManagement.Repository.Interfaces;
-using TrainingManagement.Domain.Models;
-using TrainingManagement.Repository.Data;
+using TrainingManagment.Repository.Interfaces;
+using TrainingManagment.Domain.Models;
+using TrainingManagment.Repository.Data;
 using System.Linq;
-using TrainingManagement.Domain.Models.Enums;
+using TrainingManagment.Domain.Models.Enums;
 
-namespace TrainingManagement.Repository.Repositories
+namespace TrainingManagment.Repository.Repositories
 {
     public class SessionsRepository : BaseRepository<Session>, ISessionsRepository
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TrainingSystem.EF.Migrations
+namespace TrainingManagment.Repository.Migrations
 {
     public partial class EditTableFields : Migration
     {

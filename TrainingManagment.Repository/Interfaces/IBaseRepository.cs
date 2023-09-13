@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using TrainingManagement.Domain.consts;
+using TrainingManagment.Domain.consts;
 
-namespace TrainingManagement.Repository.Interfaces
+namespace TrainingManagment.Repository.Interfaces
 {
     public interface IBaseRepository<T> where T : class
     {

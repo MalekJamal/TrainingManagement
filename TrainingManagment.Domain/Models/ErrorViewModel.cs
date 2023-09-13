@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TrainingManagement.Domain.Models
+namespace TrainingManagment.Domain.Models
 {
     public class ErrorViewModel
     {

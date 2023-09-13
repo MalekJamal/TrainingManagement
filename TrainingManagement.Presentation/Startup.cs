@@ -10,12 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TrainingManagement.Domain.Models;
-using TrainingManagement.Repository.Data;
-using TrainingManagement.Repository.Interfaces;
-using TrainingManagement.Repository.Repositories;
+using TrainingManagment.Domain.Models;
+using TrainingManagment.Repository.Data;
+using TrainingManagment.Repository.Interfaces;
+using TrainingManagment.Repository.Repositories;
 
-namespace TrainingManagement.Presentation
+namespace TrainingManagment.Presentation
 {
     public class Startup
     {
@@ -37,8 +37,9 @@ namespace TrainingManagement.Presentation
             //services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
             services.AddControllersWithViews();

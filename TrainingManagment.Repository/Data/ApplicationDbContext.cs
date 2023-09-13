@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
-using TrainingManagement.Domain.Models;
+using TrainingManagment.Domain.Models;
 using static System.Collections.Specialized.BitVector32;
 
-namespace TrainingManagement.Repository.Data
+namespace TrainingManagment.Repository.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -25,7 +25,7 @@ namespace TrainingManagement.Repository.Data
             //modelBuilder.HasDefaultSchema("TPS"); // to change the the name of the schema
 
             // Rename the table names
-            modelBuilder.Entity<IdentityUser>().ToTable("Users", "Security");
+            modelBuilder.Entity<User>().ToTable("Users", "Security");
             modelBuilder.Entity<IdentityRole>().ToTable("Roles", "Security");
             modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles", "Security");
             modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims", "Security");

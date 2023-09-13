@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using TrainingManagement.Domain.Models;
+using TrainingManagment.Domain.Models;
 
-namespace TrainingManagement.Presentation.Controllers
+namespace TrainingManagment.Presentation.Controllers
 {
     public class HomeController : Controller
     {

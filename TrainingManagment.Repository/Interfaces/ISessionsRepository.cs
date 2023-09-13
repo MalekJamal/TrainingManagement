@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TrainingManagement.Domain.Models;
+using TrainingManagment.Domain.Models;
 
-namespace TrainingManagement.Repository.Interfaces
+namespace TrainingManagment.Repository.Interfaces
 {
     public interface ISessionsRepository : IBaseRepository<Session>
     {

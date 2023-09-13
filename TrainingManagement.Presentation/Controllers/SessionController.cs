@@ -1,11 +1,11 @@
-﻿using TrainingManagement.Domain.Models.Enums;
+﻿using TrainingManagment.Domain.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using TrainingManagement.Repository.Interfaces;
-using TrainingManagement.Domain.Models;
-using TrainingManagement.Domain.ViewModels;
+using TrainingManagment.Repository.Interfaces;
+using TrainingManagment.Domain.Models;
+using TrainingManagment.Domain.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Collections;
@@ -13,9 +13,12 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using System.Data;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+using TrainingManagment.Domain.consts;
 
-namespace TrainingManagement.Presentation.Controllers
+namespace TrainingManagment.Presentation.Controllers
 {
+    [Authorize(Roles = RoleName.Admin)]
     public class SessionController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -249,7 +252,7 @@ namespace TrainingManagement.Presentation.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateSession([FromBody] List<Object> sessions)
+        public async Task<IActionResult> CreateSession([FromBody] List<Session> sessions)
         {
             if (!ModelState.IsValid)
             {

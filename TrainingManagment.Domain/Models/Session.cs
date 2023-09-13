@@ -1,11 +1,11 @@
-﻿using TrainingManagement.Domain.Models.Enums;
+﻿using TrainingManagment.Domain.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace TrainingManagement.Domain.Models
+namespace TrainingManagment.Domain.Models
 {
     public class Session : BaseEntity
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using TrainingManagement.Domain.Models;
+using TrainingManagment.Domain.Models;
 
-namespace TrainingManagement.Repository.Interfaces
+namespace TrainingManagment.Repository.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {

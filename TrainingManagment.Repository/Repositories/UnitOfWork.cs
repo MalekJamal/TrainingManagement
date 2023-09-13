@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using TrainingManagement.Repository.Interfaces;
-using TrainingManagement.Domain.Models;
-using TrainingManagement.Repository.Data;
-using TrainingManagement.Repository.Repositories;
+using TrainingManagment.Repository.Interfaces;
+using TrainingManagment.Domain.Models;
+using TrainingManagment.Repository.Data;
+using TrainingManagment.Repository.Repositories;
 
-namespace TrainingManagement.Repository.Repositories
+namespace TrainingManagment.Repository.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
