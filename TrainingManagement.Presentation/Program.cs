@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TrainingManagement.Presentation
+namespace TrainingManagment.Presentation
 {
     public class Program
     {

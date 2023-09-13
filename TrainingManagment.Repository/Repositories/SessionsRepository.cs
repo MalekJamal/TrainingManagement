@@ -1,23 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TrainingManagement.Repository.Interfaces;
-using TrainingManagement.Domain.Models;
-using TrainingManagement.Repository.Data;
+using TrainingManagment.Repository.Interfaces;
+using TrainingManagment.Domain.Models;
+using TrainingManagment.Repository.Data;
+using System.Linq;
+using TrainingManagment.Domain.Models.Enums;
 
-namespace TrainingManagement.Repository.Repositories
+namespace TrainingManagment.Repository.Repositories
 {
     public class SessionsRepository : BaseRepository<Session>, ISessionsRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public SessionsRepository(ApplicationDbContext context): base(context)
+        public SessionsRepository(ApplicationDbContext context) : base(context)
         {
-            
+            _context = context;
         }
-        public IEnumerable<Session> OnlyForSession()
+
+        public List<Session> GetSessionByYear(string year)
         {
-            throw new NotImplementedException();
+            return (_context.Session.Where(x => x.Year == year).ToList());
+
+        }
+
+        public int NumberOfTrainees(string year)
+        {
+            int number = _context.Session.Where(x => x.Year == year && x.IsActive == true).Count();
+
+            return number;
+        }
+
+        public int NumberOfAcceptedTrainees(string Year)
+        {
+
+            //  var Trainees =  _context.Session.Where(x => x.enResult == LookupEnum.Result.On_Hold|| x.enResult == LookupEnum.Result.Joining_TPS_Team && x.Year==Year).Count();
+            //return Trainees;
+            return 5;
+        }
+
+        public bool IsYearExist(string year)
+        {
+            var exist = _context.Session.Where(x => x.Year == year);
+            return exist.Any();
+        }
+
+        public List<Session> FindByYear(string year)
+        {
+            return (_context.Session.Where(x => x.Year == year).ToList());
         }
     }
 }

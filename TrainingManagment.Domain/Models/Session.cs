@@ -1,11 +1,12 @@
-﻿using TrainingManagement.Domain.Models.Enums;
+﻿using TrainingManagment.Domain.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TrainingManagement.Domain.Models
+namespace TrainingManagment.Domain.Models
 {
     public class Session : BaseEntity
     {
@@ -24,38 +25,45 @@ namespace TrainingManagement.Domain.Models
         public DateTime ActualEndDate { get; set; }
 
         [Required]
-        public LookupEnum.Year Year { get; set; }
+        public string Year { get; set; }
 
         [Required]
         public string TraineeName { get; set; }
 
-        // Use enums to represent these fields
-        public LookupEnum.enTrainingType TrainingType { get; set; }
-
-        public LookupEnum.TrainingTopics TrainingTopic { get; set; }
-
-        public LookupEnum.Status Status { get; set; }
-
-        public LookupEnum.Result Result { get; set; }
-        public LookupEnum.Trainer TrainerName { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime FinalPresentationDate { get; set; }
+        public DateTime? FinalPresentationDate { get; set; }
 
-        public double EvaluationScore { get; set; }
+        public double? EvaluationScore { get; set; }
 
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
         // Navigation properties to refer to related Lookup entities
-        public Lookup TrainingTypeLookup { get; set; }
+        [ForeignKey("TrainingResultId")]
+        public Lookup TrainingResult { get; set; }
+        public int? TrainingResultId { get; set; }
 
-        public Lookup TrainingTopicLookup { get; set; }
+        [ForeignKey("TrainingTopicId")]
+        public Lookup TrainingTopic { get; set; }
+        public int? TrainingTopicId { get; set; }
 
-        public Lookup StatusLookup { get; set; }
 
-        public Lookup ResultLookup { get; set; }
+        [ForeignKey("TrainingTypeId")]
+        public Lookup TrainingType { get; set; }
+        public int? TrainingTypeId { get; set; }
 
-        public Lookup TrainerLookup { get; set; }
+
+        [ForeignKey("TrainingStatusId")]
+        public Lookup TrainingStatus { get; set; }
+
+        public int? TrainingStatusId { get; set; }
+
+
+        [ForeignKey("TrainerNameId")]
+        public Lookup TrainerName { get; set; }
+        public int? TrainerNameId { get; set; }
+
+        public Lookup LookupYear { get; set; }
     }
 
 }

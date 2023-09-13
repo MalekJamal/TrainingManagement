@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace TrainingManagement.Domain.Models.Enums
+namespace TrainingManagment.Domain.Models.Enums
 {
     public static class LookupEnum
     {
+        public enum CategoryCode
+        {
+            Type = 100,
+            Topics = 200,
+            Status = 300,
+            Results = 400,
+            TrainerName = 500,
+            Year = 600
+        }
         public enum enTrainingType
         {
             Work = 1,
@@ -55,15 +64,15 @@ namespace TrainingManagement.Domain.Models.Enums
         public enum Year
         {
             
-            Year2023=1,
-            Year2024=2,
-            Year2025=3,
-            Year2026=4,
-            Year2027=5,
-            Year2028=6,
-            Year2029=7,
-            Year2030=8,
-            Year2031=9,
+            Year2023= 2023,
+            Year2024= 2024,
+            Year2025= 2025,
+            Year2026= 2026,
+            Year2027= 2027,
+            Year2028= 2028,
+            Year2029= 2029,
+            Year2030= 2030,
+            Year2031=2031,
         }
     }
 }

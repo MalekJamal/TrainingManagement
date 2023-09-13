@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TrainingManagement.Domain.Models;
+using TrainingManagment.Domain.Models;
 
-namespace TrainingManagement.Repository.Interfaces
+namespace TrainingManagment.Repository.Interfaces
 {
     public interface ISessionsRepository : IBaseRepository<Session>
     {
-        IEnumerable<Session> OnlyForSession();
+
+        int NumberOfTrainees(string year);
+        int NumberOfAcceptedTrainees(string Year);
+        bool IsYearExist(string year);
+        List<Session> FindByYear(string year);
+
     }
 }

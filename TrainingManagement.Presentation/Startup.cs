@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,11 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TrainingManagement.Repository.Data;
-using TrainingManagement.Repository.Interfaces;
-using TrainingManagement.Repository.Repositories;
+using TrainingManagment.Domain.Models;
+using TrainingManagment.Repository.Data;
+using TrainingManagment.Repository.Interfaces;
+using TrainingManagment.Repository.Repositories;
 
-namespace TrainingManagement.Presentation
+namespace TrainingManagment.Presentation
 {
     public class Startup
     {
@@ -34,6 +36,17 @@ namespace TrainingManagement.Presentation
             // Register the IBaseRepository inside the web app
             //services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            // need to changed and used in uint of work
+            services.AddTransient(typeof(SessionsRepository), typeof(SessionsRepository));
+            services.AddTransient(typeof(LookupRepository), typeof(LookupRepository));
+            services.AddTransient(typeof(ISessionsRepository), typeof(SessionsRepository));
+            //
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -58,6 +71,7 @@ namespace TrainingManagement.Presentation
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -65,6 +79,8 @@ namespace TrainingManagement.Presentation
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

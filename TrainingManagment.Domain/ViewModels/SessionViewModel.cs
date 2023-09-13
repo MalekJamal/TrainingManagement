@@ -3,62 +3,73 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using TrainingManagement.Domain.Models;
-using TrainingManagement.Domain.Models.Enums;
+using TrainingManagment.Domain.Models;
+using TrainingManagment.Domain.Models.Enums;
 
-namespace TrainingManagement.Domain.ViewModels
+namespace TrainingManagment.Domain.ViewModels
 {
     public class SessionViewModel
     {
 
-        [Key]
         public int SessionId { get; set; }
 
+        [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Start Date is required.")]
-        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
-        [DataType(DataType.Date), Required]
-        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+
+        [Display(Name = "Expected End Date")]
+        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Expected End Date is required.")]
         public DateTime ExpectedEndDate { get; set; }
 
+        [Display(Name = "Actual End Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime ActualEndDate { get; set; }
+        public DateTime? ActualEndDate { get; set; }
 
-        [Required]
-        public LookupEnum.Year Year { get; set; }
+        [Display(Name = "Year")]
+        [Required(ErrorMessage = "Year is required.")]
+        public string Year { get; set; }
 
-        [Required]
+        [Display(Name = "Trainee Name")]
+        [Required(ErrorMessage = "Trainee Name is required.")]
         public string TraineeName { get; set; }
 
-        // Use enums to represent these fields
-        public LookupEnum.enTrainingType TrainingType { get; set; }
-
-        public LookupEnum.TrainingTopics TrainingTopic { get; set; }
-
-        public LookupEnum.Status Status { get; set; }
-
-        public LookupEnum.Result Result { get; set; }
-        public LookupEnum.Trainer TrainerName { get; set; }
-
+        [Display(Name = "Final Presentation Date")]
         [DataType(DataType.Date)]
-        public DateTime FinalPresentationDate { get; set; }
+        public DateTime? FinalPresentationDate { get; set; }
 
-        public double EvaluationScore { get; set; }
+        [Display(Name = "Evaluation Score")]
+        public double? EvaluationScore { get; set; }
 
+        [Display(Name = "Comment")]
         public string Comment { get; set; }
 
-        // Navigation properties to refer to related Lookup entities
-        public Lookup TrainingTypeLookup { get; set; }
+        [Display(Name = "Training Result")]
+        public int? TrainingResultId { get; set; }
 
-        public Lookup TrainingTopicLookup { get; set; }
+        [Display(Name = "Training Topic")]
+        public int? TrainingTopicId { get; set; }
 
-        public Lookup StatusLookup { get; set; }
+        [Display(Name = "Training Type")]
+        public int? TrainingTypeId { get; set; }
 
-        public Lookup ResultLookup { get; set; }
+        [Display(Name = "Training Status")]
+        public int? TrainingStatusId { get; set; }
 
-        public Lookup TrainerLookup { get; set; }
-        public IEnumerable<Session> Sessions { get; set; }
+        [Display(Name = "Trainer Name")]
+        public int? TrainerNameId { get; set; }
+
+        [Display(Name = "Lookup Year")]
+        public int? LookupYearId { get; set; }
+
+
+        // Navigation properties
+        public Lookup TrainingResult { get; set; }
+        public Lookup TrainingTopic { get; set; }
+        public Lookup TrainingType { get; set; }
+        public Lookup TrainingStatus { get; set; }
+        public Lookup TrainerName { get; set; }
+        public Lookup LookupYear { get; set; }
     }
 }

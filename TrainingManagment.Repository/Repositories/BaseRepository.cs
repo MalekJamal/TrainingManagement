@@ -5,11 +5,11 @@ using System.Linq.Expressions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TrainingManagement.Repository.Interfaces;
-using TrainingManagement.Domain.consts;
-using TrainingManagement.Repository.Data;
+using TrainingManagment.Repository.Interfaces;
+using TrainingManagment.Domain.consts;
+using TrainingManagment.Repository.Data;
 
-namespace TrainingManagement.Repository.Repositories
+namespace TrainingManagment.Repository.Repositories
 {
     public class DataAccessException : Exception
     {

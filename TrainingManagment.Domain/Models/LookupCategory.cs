@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace TrainingManagement.Domain.Models
+namespace TrainingManagment.Domain.Models
 {
     public class LookupCategory : BaseEntity
     {

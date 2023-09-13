@@ -1,0 +1,60 @@
+﻿<div class="container">
+    <h3 class="text-primary ">Training Types</h3>
+    <hr />
+
+    <table id="myTable" class="table table-bordered table-striped table-responsive table-hover w-100">
+        <tbody class="w-100"></tbody>
+    </table>
+
+</div>
+
+@section Scripts
+    {
+
+    <script type="text/javascript">
+        var dataTable; // Declare the DataTable variable globally
+
+        $(function () {
+            LoadData();
+        });
+
+        function LoadData() {
+            if (dataTable) {
+                dataTable.destroy(); // Destroy the existing DataTable (if any)
+            }
+
+            $.ajax({
+                type: 'get',
+                url: '/api/ListApi/Types',
+                dataType: 'json',
+                data: { id: '' },
+                success: function (data) {
+                    var items = '';
+                    $.each(data, function (i, item) {
+                        var rows = "<tr>"
+                            + "<td>" + item.id + "</td>"
+                            + "<td>" + item.nameEn + "</td>"
+                            + "</tr>";
+                        $('#myTable tbody').append(rows);
+                    });
+
+                    // Initialize the DataTable with column headers
+                    dataTable = $('#myTable').DataTable({
+                        "autoWidth": "true",
+                        "paging": "true",
+                        "columns": [
+                            { "title": "Types ID" },
+                            { "title": "Training Types" },
+                        ]
+                    });
+                },
+                error: function (ex) {
+                    alert(ex);
+                }
+            });
+
+            return false;
+        }
+    </script>
+
+}

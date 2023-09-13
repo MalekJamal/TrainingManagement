@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
-using TrainingManagement.Domain.Models;
+using TrainingManagment.Domain.Models;
 using static System.Collections.Specialized.BitVector32;
 
-namespace TrainingManagement.Repository.Data
+namespace TrainingManagment.Repository.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -19,6 +20,19 @@ namespace TrainingManagement.Repository.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.HasDefaultSchema("TPS"); // to change the the name of the schema
+
+            // Rename the table names
+            modelBuilder.Entity<User>().ToTable("Users", "Security");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles", "Security");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles", "Security");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims", "Security");
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins", "Security");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims", "Security");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens", "Security");
+
             // Define primary keys
             modelBuilder.Entity<Lookup>().HasKey(e => e.Id);
             modelBuilder.Entity<LookupCategory>().HasKey(e => e.CategoryId);
@@ -28,7 +42,6 @@ namespace TrainingManagement.Repository.Data
             // Seed data
             SeedData(modelBuilder);
 
-            base.OnModelCreating(modelBuilder);
         }
 
         private void SeedData(ModelBuilder modelBuilder)
@@ -295,7 +308,7 @@ namespace TrainingManagement.Repository.Data
                 },
 
                 // Year Lookups
-                new Lookup { Id = 26, Code = 1, NameEn = "Year2023", NameAr = "Year2023", LookupCategoryId = 600,
+                new Lookup { Id = 26, Code = 2023, NameEn = "2023", NameAr = "Year2023", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -303,7 +316,7 @@ namespace TrainingManagement.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 27, Code = 2, NameEn = "Year2024", NameAr = "Year2024", LookupCategoryId = 600,
+                new Lookup { Id = 27, Code = 2024, NameEn = "2024", NameAr = "Year2024", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -311,7 +324,7 @@ namespace TrainingManagement.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 28, Code = 3, NameEn = "Year2025", NameAr = "Year2025", LookupCategoryId = 600,
+                new Lookup { Id = 28, Code = 2025, NameEn = "2025", NameAr = "Year2025", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -319,7 +332,7 @@ namespace TrainingManagement.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 29, Code = 4, NameEn = "Year2026", NameAr = "Year2026", LookupCategoryId = 600,
+                new Lookup { Id = 29, Code = 2026, NameEn = "2026", NameAr = "Year2026", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -327,7 +340,7 @@ namespace TrainingManagement.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 30, Code = 5, NameEn = "Year2027", NameAr = "Year2027", LookupCategoryId = 600,
+                new Lookup { Id = 30, Code = 2027, NameEn = "2027", NameAr = "Year2027", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -335,7 +348,7 @@ namespace TrainingManagement.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 31, Code = 6, NameEn = "Year2028", NameAr = "Year2028", LookupCategoryId = 600,
+                new Lookup { Id = 31, Code = 2028, NameEn = "2028", NameAr = "Year2028", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -343,7 +356,7 @@ namespace TrainingManagement.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 32, Code = 7, NameEn = "Year2029", NameAr = "Year2029", LookupCategoryId = 600,
+                new Lookup { Id = 32, Code = 2029, NameEn = "2029", NameAr = "Year2029", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -351,7 +364,7 @@ namespace TrainingManagement.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 33, Code = 8, NameEn = "Year2030", NameAr = "Year2030", LookupCategoryId = 600,
+                new Lookup { Id = 33, Code = 2030, NameEn = "2030", NameAr = "Year2030", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -359,7 +372,7 @@ namespace TrainingManagement.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 34, Code = 9, NameEn = "Year2031", NameAr = "Year2031", LookupCategoryId = 600,
+                new Lookup { Id = 34, Code = 2031   , NameEn = "2031", NameAr = "Year2031", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
