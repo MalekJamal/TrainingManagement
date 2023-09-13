@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrainingManagment.Repository.Data;
 
 namespace TrainingManagment.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230913113237_UpdateAllTheProject01")]
+    partial class UpdateAllTheProject01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,7 +208,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 1,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(633),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(2967),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -220,7 +222,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 2,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1706),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3284),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -234,7 +236,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 3,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1727),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3291),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -248,7 +250,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 4,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1732),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3294),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -262,7 +264,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 5,
                             Code = 3,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1735),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3296),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -276,7 +278,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 6,
                             Code = 4,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1739),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3298),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -290,7 +292,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 7,
                             Code = 5,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1742),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3301),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -304,7 +306,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 8,
                             Code = 6,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1745),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3492),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -318,7 +320,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 9,
                             Code = 7,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1748),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3495),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -332,7 +334,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 10,
                             Code = 8,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1752),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3497),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -346,7 +348,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 11,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1756),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3500),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -360,7 +362,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 12,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1760),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3502),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -374,7 +376,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 13,
                             Code = 3,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1764),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3505),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -388,7 +390,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 14,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1767),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3508),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -402,7 +404,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 15,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1771),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3510),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -416,7 +418,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 16,
                             Code = 3,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1774),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3512),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -430,7 +432,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 17,
                             Code = 4,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1778),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3514),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -444,7 +446,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 18,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1781),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3517),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -458,7 +460,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 19,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1784),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3519),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -472,7 +474,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 20,
                             Code = 3,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1788),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3521),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -486,7 +488,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 21,
                             Code = 4,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1791),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3524),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -500,7 +502,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 22,
                             Code = 5,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1794),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3526),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -514,7 +516,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 23,
                             Code = 6,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1798),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3528),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -528,7 +530,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 24,
                             Code = 7,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1801),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3531),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -542,7 +544,7 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 25,
                             Code = 8,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1804),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3533),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
@@ -556,126 +558,126 @@ namespace TrainingManagment.Repository.Migrations
                             Id = 26,
                             Code = 2023,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1808),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3535),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
                             LookupCategoryId = 600,
                             ModifyOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NameAr = "Year2023",
-                            NameEn = "2023"
+                            NameEn = "Year2023"
                         },
                         new
                         {
                             Id = 27,
                             Code = 2024,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1811),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3537),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
                             LookupCategoryId = 600,
                             ModifyOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NameAr = "Year2024",
-                            NameEn = "2024"
+                            NameEn = "Year2024"
                         },
                         new
                         {
                             Id = 28,
                             Code = 2025,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1814),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3540),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
                             LookupCategoryId = 600,
                             ModifyOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NameAr = "Year2025",
-                            NameEn = "2025"
+                            NameEn = "Year2025"
                         },
                         new
                         {
                             Id = 29,
                             Code = 2026,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1818),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3542),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
                             LookupCategoryId = 600,
                             ModifyOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NameAr = "Year2026",
-                            NameEn = "2026"
+                            NameEn = "Year2026"
                         },
                         new
                         {
                             Id = 30,
                             Code = 2027,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1821),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3545),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
                             LookupCategoryId = 600,
                             ModifyOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NameAr = "Year2027",
-                            NameEn = "2027"
+                            NameEn = "Year2027"
                         },
                         new
                         {
                             Id = 31,
                             Code = 2028,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1825),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3547),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
                             LookupCategoryId = 600,
                             ModifyOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NameAr = "Year2028",
-                            NameEn = "2028"
+                            NameEn = "Year2028"
                         },
                         new
                         {
                             Id = 32,
                             Code = 2029,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1828),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3549),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
                             LookupCategoryId = 600,
                             ModifyOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NameAr = "Year2029",
-                            NameEn = "2029"
+                            NameEn = "Year2029"
                         },
                         new
                         {
                             Id = 33,
                             Code = 2030,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1832),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3552),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
                             LookupCategoryId = 600,
                             ModifyOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NameAr = "Year2030",
-                            NameEn = "2030"
+                            NameEn = "Year2030"
                         },
                         new
                         {
                             Id = 34,
                             Code = 2031,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 309, DateTimeKind.Local).AddTicks(1835),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 604, DateTimeKind.Local).AddTicks(3554),
                             Description = "",
                             IsActive = true,
                             IsDeleted = false,
                             LookupCategoryId = 600,
                             ModifyOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NameAr = "Year2031",
-                            NameEn = "2031"
+                            NameEn = "Year2031"
                         });
                 });
 
@@ -730,7 +732,7 @@ namespace TrainingManagment.Repository.Migrations
                             CategoryId = 100,
                             Code = 1,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 304, DateTimeKind.Local).AddTicks(8603),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 601, DateTimeKind.Local).AddTicks(4678),
                             Description = "Training Type That TPS Provided",
                             IsActive = true,
                             IsDeleted = false,
@@ -743,7 +745,7 @@ namespace TrainingManagment.Repository.Migrations
                             CategoryId = 200,
                             Code = 2,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 306, DateTimeKind.Local).AddTicks(6803),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 602, DateTimeKind.Local).AddTicks(8703),
                             Description = "Training Topics That TPS Provided",
                             IsActive = true,
                             IsDeleted = false,
@@ -756,7 +758,7 @@ namespace TrainingManagment.Repository.Migrations
                             CategoryId = 300,
                             Code = 3,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 306, DateTimeKind.Local).AddTicks(6844),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 602, DateTimeKind.Local).AddTicks(8731),
                             Description = "Training Status",
                             IsActive = true,
                             IsDeleted = false,
@@ -769,7 +771,7 @@ namespace TrainingManagment.Repository.Migrations
                             CategoryId = 400,
                             Code = 4,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 306, DateTimeKind.Local).AddTicks(6849),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 602, DateTimeKind.Local).AddTicks(8735),
                             Description = "Training Result",
                             IsActive = true,
                             IsDeleted = false,
@@ -782,7 +784,7 @@ namespace TrainingManagment.Repository.Migrations
                             CategoryId = 500,
                             Code = 5,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 306, DateTimeKind.Local).AddTicks(6852),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 602, DateTimeKind.Local).AddTicks(8739),
                             Description = "Trainer Name",
                             IsActive = true,
                             IsDeleted = false,
@@ -795,7 +797,7 @@ namespace TrainingManagment.Repository.Migrations
                             CategoryId = 600,
                             Code = 6,
                             CreatedBy = "Malek Hamdan",
-                            CreatedOn = new DateTime(2023, 9, 13, 14, 48, 0, 306, DateTimeKind.Local).AddTicks(6855),
+                            CreatedOn = new DateTime(2023, 9, 13, 14, 32, 36, 602, DateTimeKind.Local).AddTicks(8743),
                             Description = "Training Year That TPS Provided",
                             IsActive = true,
                             IsDeleted = false,

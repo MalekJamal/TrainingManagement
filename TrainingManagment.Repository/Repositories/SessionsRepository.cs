@@ -17,79 +17,37 @@ namespace TrainingManagment.Repository.Repositories
         {
             _context = context;
         }
-        public IEnumerable<Session> OnlyForSession()
+
+        public List<Session> GetSessionByYear(string year)
         {
-            throw new NotImplementedException();
+            return (_context.Session.Where(x => x.Year == year).ToList());
+
         }
 
-        public int NumberOfAcceptedTrainees(int Year)
+        public int NumberOfTrainees(string year)
         {
+            int number = _context.Session.Where(x => x.Year == year && x.IsActive == true).Count();
 
-            ////???
-            var Trainees = FindByYear(Year).Where(x => (int)x.Result == (int)LookupEnum.Result.Joining_TPS_Team).Count();
-            return Trainees;
+            return number;
         }
 
-        public int NumberOfTrainees(int Year)
+        public int NumberOfAcceptedTrainees(string Year)
         {
-            int numberOfTrainees = FindByYear(Year).Count();
-            return numberOfTrainees;
+
+            //  var Trainees =  _context.Session.Where(x => x.enResult == LookupEnum.Result.On_Hold|| x.enResult == LookupEnum.Result.Joining_TPS_Team && x.Year==Year).Count();
+            //return Trainees;
+            return 5;
         }
 
-
-        public List<Session> FindByYear(int? Year)
+        public bool IsYearExist(string year)
         {
-            List<Session> list = new List<Session>();
-
-            list = _context.Session.Where(x => (int)x.Year == Year && x.IsActive == true).ToList();
-
-            return list;
+            var exist = _context.Session.Where(x => x.Year == year);
+            return exist.Any();
         }
 
-
-        public List<Lookup> GetAllTopics()
+        public List<Session> FindByYear(string year)
         {
-            List<Lookup> Topics = new List<Lookup>();
-
-            Topics = _context.Lookup.Where(x => x.LookupCategory.Code == 200).ToList();
-            //   _context.Sessions.Where(a => a.TrainerName.Code == (int)LookupEnum.Trainer.ZakariaLafi );
-            return Topics;
-        }
-
-        public List<Lookup> GetAllTypes()
-        {
-            List<Lookup> Types = new List<Lookup>();
-
-            Types = _context.Lookup.Where(x => x.LookupCategory.Code == 100).ToList();
-
-            return Types;
-        }
-
-        public List<Lookup> GetAllTrainers()
-        {
-            List<Lookup> Trainers = new List<Lookup>();
-
-            Trainers = _context.Lookup.Where(x => x.LookupCategory.Code == 500).ToList();
-
-            return Trainers;
-        }
-
-        public List<Lookup> GetAllStatus()
-        {
-            List<Lookup> Status = new List<Lookup>();
-
-            Status = _context.Lookup.Where(x => x.LookupCategory.Code == 300).ToList();
-
-            return Status;
-        }
-
-        public List<Lookup> GetAllResults()
-        {
-            List<Lookup> Results = new List<Lookup>();
-
-            Results = _context.Lookup.Where(x => x.LookupCategory.Code == 400).ToList();
-
-            return Results;
+            return (_context.Session.Where(x => x.Year == year).ToList());
         }
     }
 }

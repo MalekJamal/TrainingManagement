@@ -69,164 +69,246 @@ namespace TrainingManagment.Presentation.Controllers
         {
             return View();
         }
-
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Session session)
+       
+        public async Task<IActionResult> Create([FromBody] List<Session> newSessionData)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(session);
-            }
+
             try
             {
-                var exist = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.Year == (int)session.Year);
-                if(exist.Count() >0)
+                foreach (var item in newSessionData)
                 {
-                    ModelState.AddModelError("Year", "This Year Already exist please update the session");
-                    return View();
+                    if (item != null)
+                    {
+                        item.CreatedBy = "dc9a8b7d-2014-445b-b63f-6d0ff68da9d7";
+                        item.CreatedOn = DateTime.Now;
+                        item.IsActive = true;
+                        item.IsDeleted = false;
+                        item.Year = "2023";
+
+                        //item.TrainerName.Id =(int) item.TrainerNameId;
+                        //item.TrainingTopic.Id = (int)item.TrainingTopicId;
+                        //item.TrainingType.Id = (int)item.TrainingTypeId;
+
+                        await _unitOfWork.Sessions.AddAsync(item);
+                    }
+
+
                 }
-                // Call the repository layer to add the entity.
-                var result = await _unitOfWork.Sessions.AddAsync(session);
+                await _unitOfWork.Complete();
 
-                // I will use _unitOfWork.Complete(), when add, update and delete from database
-                int a = await _unitOfWork.Complete();
 
-                // Handle success and redirection.
-                return RedirectToAction(nameof(Index));
+                return Json(new { message = "Session data inserted successfully." });
             }
             catch (Exception ex)
             {
-                // Log the exception.
-                _logger.LogError(ex, "An error occurred while adding a session.");
-
-                // Handle the exception, display a generic error message, and possibly redirect to an error page.
-                ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
-                return View(session);
+                return Json(new { error = ex.Message });
             }
-
         }
 
-        public async Task<IActionResult> Search(SessionViewModel session)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(Session session)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(session);
+        //    }
+        //    try
+        //    {
+        //        var exist = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.Year == (int)session.Year);
+        //        if(exist.Count() >0)
+        //        {
+        //            ModelState.AddModelError("Year", "This Year Already exist please update the session");
+        //            return View();
+        //        }
+        //        // Call the repository layer to add the entity.
+        //        var result = await _unitOfWork.Sessions.AddAsync(session);
+
+        //        // I will use _unitOfWork.Complete(), when add, update and delete from database
+        //        int a = await _unitOfWork.Complete();
+
+        //        // Handle success and redirection.
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log the exception.
+        //        _logger.LogError(ex, "An error occurred while adding a session.");
+
+        //        // Handle the exception, display a generic error message, and possibly redirect to an error page.
+        //        ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
+        //        return View(session);
+        //    }
+
+        //}
+
+        //public async Task<IActionResult> Search(SessionViewModel session)
+        //{
+        //    if (session.Year != 0 || session.TrainingType == 0 &&
+        //        session.TrainerName == 0 && session.TraineeName == null &&
+        //        session.Status == 0 && session.Result == 0 &&
+        //        session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+        //    {
+        //        var sessions = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.Year == (int)session.Year);
+        //        return View(sessions);
+        //    }
+
+        //    if (session.Year == 0 && session.TrainingType != 0 ||
+        //       session.TrainerName == 0 && session.TraineeName == null &&
+        //       session.Status == 0 && session.Result == 0 &&
+        //       session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+        //    {
+        //        var sessions = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.TrainingType == (int)session.TrainingType);
+        //        return View(sessions);
+        //    }
+
+        //    if (session.Year == 0 && session.TrainingType == 0 &&
+        //      session.TrainerName != 0 || session.TraineeName == null &&
+        //      session.Status == 0 && session.Result == 0 &&
+        //      session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+        //    {
+        //        var sessions = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.TrainerName == (int)session.TrainerName);
+        //        return View(sessions);
+        //    }
+
+        //    if (session.Year == 0 && session.TrainingType == 0 &&
+        //      session.TrainerName == 0 && session.TraineeName != null ||
+        //      session.Status == 0 && session.Result == 0 &&
+        //      session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+        //    {
+        //        var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.TraineeName.Contains(session.TraineeName));
+        //        return View(sessions);
+        //    }
+
+        //    if (session.Year == 0 && session.TrainingType == 0 &&
+        //      session.TrainerName == 0 && session.TraineeName == null &&
+        //      session.Status != 0 || session.Result == 0 &&
+        //      session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+        //    {
+        //        var sessions = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.Status == (int)session.Status);
+        //        return View(sessions);
+        //    }
+
+        //    if (session.Year == 0 && session.TrainingType == 0 &&
+        //      session.TrainerName == 0 && session.TraineeName == null &&
+        //      session.Status == 0 && session.Result != 0 ||
+        //      session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+        //    {
+        //        var sessions = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.Result == (int)session.Result);
+        //        return View(sessions);
+        //    }
+
+        //    if (session.Year == 0 && session.TrainingType == 0 &&
+        //      session.TrainerName == 0 && session.TraineeName == null &&
+        //      session.Status == 0 && session.Result == 0 &&
+        //      session.StartDate.Equals(null) || session.ExpectedEndDate.Equals(null))
+        //    {
+        //        var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.StartDate.Date == session.StartDate);
+        //        return View(sessions);
+        //    }
+
+        //    if (session.Year == 0 && session.TrainingType == 0 &&
+        //      session.TrainerName == 0 && session.TraineeName == null &&
+        //      session.Status == 0 && session.Result == 0 &&
+        //     !session.StartDate.Equals(null) || !session.ExpectedEndDate.Equals(null))
+        //    {
+        //        var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.ExpectedEndDate.Date == session.ExpectedEndDate);
+        //        return View(sessions);
+        //    }
+
+        //    return View();
+        //}
+
+        //[HttpGet]
+        //public IActionResult UpdateCurrent(int? year)
+        //{
+        //    try
+        //    {
+        //        if (year == null || year == 0)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        var sessions = _unitOfWork.Sessions.FindByYear(year);
+        //        var a = sessions.Select(x => x.Year);
+
+        //        return View();
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        // Log the exception.
+        //        _logger.LogError(ex, "An error occurred while Updating a session.");
+
+        //        // Handle the exception, display a generic error message, and possibly redirect to an error page.
+        //        ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
+        //        return View();
+        //    }
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult UpdateCurrent(Session model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+
+        //    }
+        //    model.Year = LookupEnum.Year.Year2023;
+        //    _unitOfWork.Sessions.Update(model);
+        //    _unitOfWork.Complete();
+        //    return RedirectToAction("Index");
+
+        //}
+
+        public IActionResult Update()
         {
-            if (session.Year != 0 || session.TrainingType == 0 &&
-                session.TrainerName == 0 && session.TraineeName == null &&
-                session.Status == 0 && session.Result == 0 &&
-                session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.Year == (int)session.Year);
-                return View(sessions);
-            }
-
-            if (session.Year == 0 && session.TrainingType != 0 ||
-               session.TrainerName == 0 && session.TraineeName == null &&
-               session.Status == 0 && session.Result == 0 &&
-               session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.TrainingType == (int)session.TrainingType);
-                return View(sessions);
-            }
-
-            if (session.Year == 0 && session.TrainingType == 0 &&
-              session.TrainerName != 0 || session.TraineeName == null &&
-              session.Status == 0 && session.Result == 0 &&
-              session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.TrainerName == (int)session.TrainerName);
-                return View(sessions);
-            }
-
-            if (session.Year == 0 && session.TrainingType == 0 &&
-              session.TrainerName == 0 && session.TraineeName != null ||
-              session.Status == 0 && session.Result == 0 &&
-              session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.TraineeName.Contains(session.TraineeName));
-                return View(sessions);
-            }
-
-            if (session.Year == 0 && session.TrainingType == 0 &&
-              session.TrainerName == 0 && session.TraineeName == null &&
-              session.Status != 0 || session.Result == 0 &&
-              session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.Status == (int)session.Status);
-                return View(sessions);
-            }
-
-            if (session.Year == 0 && session.TrainingType == 0 &&
-              session.TrainerName == 0 && session.TraineeName == null &&
-              session.Status == 0 && session.Result != 0 ||
-              session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.Result == (int)session.Result);
-                return View(sessions);
-            }
-
-            if (session.Year == 0 && session.TrainingType == 0 &&
-              session.TrainerName == 0 && session.TraineeName == null &&
-              session.Status == 0 && session.Result == 0 &&
-              session.StartDate.Equals(null) || session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.StartDate.Date == session.StartDate);
-                return View(sessions);
-            }
-
-            if (session.Year == 0 && session.TrainingType == 0 &&
-              session.TrainerName == 0 && session.TraineeName == null &&
-              session.Status == 0 && session.Result == 0 &&
-             !session.StartDate.Equals(null) || !session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.ExpectedEndDate.Date == session.ExpectedEndDate);
-                return View(sessions);
-            }
-
             return View();
         }
 
-        [HttpGet]
-        public IActionResult UpdateCurrent(int? year)
+        [HttpPost]
+        public IActionResult Update([FromBody] List<Session> newSessionData)
         {
             try
             {
-                if (year == null || year == 0)
+                foreach (var item in newSessionData)
                 {
-                    return NotFound();
+                    if (item != null)
+                    {
+                        item.CreatedBy = "dc9a8b7d-2014-445b-b63f-6d0ff68da9d7";
+                        item.CreatedOn = DateTime.Now;
+                        item.IsActive = true;
+                        item.IsDeleted = false;
+                        item.Year = "2023";
+
+
+                        //item.TrainingResult = _context.Lookup.Find(Session.TrainingResultId);
+                        //item.TrainingTopic = _context.Lookup.Find(SessionViewModel.TrainingTopicId);
+                        //item.TrainingType = _context.Lookup.Find(SessionViewModel.TrainingTypeId);
+                        //item.TrainingStatus = _context.Lookup.Find(SessionViewModel.TrainingStatusId);
+                        //item.TrainerName = _context.Lookup.Find(SessionViewModel.TrainerNameId);
+                        //item.LookupYear = _context.Lookup.Find(SessionViewModel.LookupYearId);
+
+
+                        _unitOfWork.Sessions.AddAsync(item);
+                    }
+
+
                 }
+                _unitOfWork.Complete();
 
-                var sessions = _unitOfWork.Sessions.FindByYear(year);
-                var a = sessions.Select(x => x.Year);
 
-                return View();
-                
+                return Json(new { message = "Session data inserted successfully." });
             }
             catch (Exception ex)
             {
-
-                // Log the exception.
-                _logger.LogError(ex, "An error occurred while Updating a session.");
-
-                // Handle the exception, display a generic error message, and possibly redirect to an error page.
-                ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
-                return View();
+                return Json(new { error = ex.Message });
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult UpdateCurrent(Session model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-
-            }
-            model.Year = LookupEnum.Year.Year2023;
-            _unitOfWork.Sessions.Update(model);
-            _unitOfWork.Complete();
-            return RedirectToAction("Index");
-
-        }
 
         [HttpGet]
         public async Task<IActionResult> GetSessions()
@@ -251,36 +333,36 @@ namespace TrainingManagment.Presentation.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> CreateSession([FromBody] List<Session> sessions)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Json(new { Message = "Error" });
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> CreateSession([FromBody] List<Session> sessions)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Json(new { Message = "Error" });
+        //    }
 
-            try
-            {
+        //    try
+        //    {
 
                 
-                // Call the repository layer to add the entity
-                // var result = await _unitOfWork.Sessions.AddAsync((Session)session);
+        //        // Call the repository layer to add the entity
+        //        // var result = await _unitOfWork.Sessions.AddAsync((Session)session);
 
-                // I will use _unitOfWork.Complete(), when add, update and delete from the database
-                // int a = await _unitOfWork.Complete();
-                string message = "SUCCESS";
-                return Json(new { Message = message });
-            }
-            catch (Exception ex)
-            {
-                // Log the exception.
-                _logger.LogError(ex, "An error occurred while adding a session.");
+        //        // I will use _unitOfWork.Complete(), when add, update and delete from the database
+        //        // int a = await _unitOfWork.Complete();
+        //        string message = "SUCCESS";
+        //        return Json(new { Message = message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log the exception.
+        //        _logger.LogError(ex, "An error occurred while adding a session.");
 
-                // Handle the exception, display a generic error message, and possibly redirect to an error page.
-                ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
-                return Json(new { Message = "Something went wrong" });
-            }
-        }
+        //        // Handle the exception, display a generic error message, and possibly redirect to an error page.
+        //        ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
+        //        return Json(new { Message = "Something went wrong" });
+        //    }
+        //}
 
     }
 }

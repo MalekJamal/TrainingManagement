@@ -7,6 +7,15 @@ namespace TrainingManagment.Domain.Models.Enums
 {
     public static class LookupEnum
     {
+        public enum CategoryCode
+        {
+            Type = 100,
+            Topics = 200,
+            Status = 300,
+            Results = 400,
+            TrainerName = 500,
+            Year = 600
+        }
         public enum enTrainingType
         {
             Work = 1,

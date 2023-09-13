@@ -37,6 +37,12 @@ namespace TrainingManagment.Presentation
             //services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+            // need to changed and used in uint of work
+            services.AddTransient(typeof(SessionsRepository), typeof(SessionsRepository));
+            services.AddTransient(typeof(LookupRepository), typeof(LookupRepository));
+            services.AddTransient(typeof(ISessionsRepository), typeof(SessionsRepository));
+            //
+
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()

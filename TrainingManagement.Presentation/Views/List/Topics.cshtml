@@ -1,0 +1,55 @@
+﻿<link href="~/datatables/css/datatables.bootstrap4.css" rel="stylesheet" />
+<link href="~/datatables/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+<div class="container">
+    <h3 class="text-primary ">Topics </h3>
+    <hr />
+
+    <table id="myTable" class="table table-bordered table-striped table-responsive table-hover w-100">
+        <tbody class="w-100"></tbody>
+    </table>
+
+</div>
+
+@section Scripts
+    {
+
+    <script type="text/javascript">
+        var dataTable;
+
+        $(function () {
+            LoadData();
+        });
+
+        function LoadData() {
+            debugger;
+            if (dataTable) {
+                dataTable.destroy(); // Destroy the existing DataTable (if any)
+            }
+
+            $.ajax({
+                type: 'get',
+                url: '@Url.Action("Topics")',
+                dataType: 'json',
+                data: { id: '' },
+                success: function (data) {
+                    // Initialize the DataTable with column headers and data
+                    dataTable = $('#myTable').DataTable({
+                        "autoWidth": true, // Remove quotes around true
+                        "data": data, // Provide the data directly
+                        "columns": [
+                            { "data": "Id", "title": "Topic Id" },
+                            { "data": "NameEn", "title": "Topic Name" },
+                        ]
+                    });
+                },
+                error: function (ex) {
+                    alert('Somthing went wrong!');
+                }
+            });
+
+            return false;
+        }
+    </script>
+
+}

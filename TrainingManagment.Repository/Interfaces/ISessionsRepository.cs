@@ -7,9 +7,11 @@ namespace TrainingManagment.Repository.Interfaces
 {
     public interface ISessionsRepository : IBaseRepository<Session>
     {
-        IEnumerable<Session> OnlyForSession();
-        int NumberOfAcceptedTrainees(int Year);
-        List<Session> FindByYear(int? Year);
-        
+
+        int NumberOfTrainees(string year);
+        int NumberOfAcceptedTrainees(string Year);
+        bool IsYearExist(string year);
+        List<Session> FindByYear(string year);
+
     }
 }
