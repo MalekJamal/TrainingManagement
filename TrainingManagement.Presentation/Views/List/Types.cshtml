@@ -1,11 +1,14 @@
-﻿<div class="container">
-    <h3 class="text-primary ">Training Types</h3>
-    <hr />
+﻿@{
+    ViewData["Title"] = "Types";
+}
+<div class="container m-2">
+    <a asp-action="AddType" class="btn btn-primary m-4 p-2">Add New Type</a>
 
-    <table id="myTable" class="table table-bordered table-striped table-responsive table-hover w-100">
+    <div class="table-responsive">
+    </div>
+    <table id="myTable" class="table table-bordered table-striped table-hover">
         <tbody class="w-100"></tbody>
     </table>
-
 </div>
 
 @section Scripts
@@ -16,6 +19,8 @@
 
         $(function () {
             LoadData();
+
+
         });
 
         function LoadData() {
@@ -31,20 +36,28 @@
                 success: function (data) {
                     var items = '';
                     $.each(data, function (i, item) {
+                        var editButton = '<button class="btn btn-warning btn-sm" onclick="editRow(' + item.id + ')">Edit</button>';
+                        var deleteButton = '<button class="btn btn-danger btn-sm js-delete" data-id="' + item.id + '">Delete</button>';
                         var rows = "<tr>"
                             + "<td>" + item.id + "</td>"
                             + "<td>" + item.nameEn + "</td>"
+                            + "<td>" + item.nameAr + "</td>"
+                            + "<td>" + editButton + " " + deleteButton + "</td>"
                             + "</tr>";
                         $('#myTable tbody').append(rows);
                     });
+
+                   
 
                     // Initialize the DataTable with column headers
                     dataTable = $('#myTable').DataTable({
                         "autoWidth": "true",
                         "paging": "true",
                         "columns": [
-                            { "title": "Types ID" },
-                            { "title": "Training Types" },
+                            { "title": "Type ID" },
+                            { "title": "Training Type" },
+                            { "title": "نوع التدريب" },
+                            { "title": "", "sortable": false }
                         ]
                     });
                 },
@@ -56,5 +69,6 @@
             return false;
         }
     </script>
+    <partial name="_ValidationScriptsPartial" />
 
 }

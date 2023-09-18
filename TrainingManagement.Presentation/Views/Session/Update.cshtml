@@ -1,5 +1,4 @@
-﻿@*should moved to viewImport*@
-@using TrainingManagment.Domain.Models.Enums;
+﻿@using TrainingManagment.Domain.Models.Enums;
 @using TrainingManagment.Repository.Repositories;
 @model Session
 
@@ -7,203 +6,274 @@
 @inject LookupRepository lookup;
 @inject SessionsRepository SessionRepo;
 
-    <title>Update Session</title>
+<title>Update Session</title>
 
-    <form id="session-entry-form">
+<form id="session-entry-form">
 
-        <div class="border p-3 mt-4">
-            <div class="row pb-2">
-                <h2 class="text-primary">
-                    Update Current Sessions
-                </h2>
-                <hr />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">
+                Update Current Sessions
+            </h2>
+            <hr />
+        </div>
+        <div class="row">
+
+            <div class="mb-6">
+                <label for="Year">Year:</label>
+                <select asp-for="Year" id="year" name="selectedCode" onchange="disableSelect(this);">
+                    <option value="">Select Year</option>
+                    @foreach (var item in lookup.GetAllYear())
+                    {
+                        <option value="@item.NameEn">@item.NameEn</option>
+                    }
+                </select>
             </div>
-            <div class="row">
 
-                <div class="mb-6">
-                    <label for="Year">Year:</label>
-                    <select asp-for="Year" id="year" name="selectedCode" onchange="disableSelect(this);">
-                        <option value="">Select Year</option>
-                        @foreach (var item in lookup.GetAllYear())
+            <script>
+                function disableSelect(select) {
+                    select.disabled = true;
+                }
+            </script>
+
+            <br />
+            <hr />
+            <div class="col-md-6">
+
+                <div class="mb-3">
+                    <input type="hidden" id="edit-id" value="-1">
+                    <label for="traineeName">Trainee Name:</label>
+                    <input type="text" id="traineeName" name="traineeName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="trainerName">Trainer Name:</label>
+                    <select asp-for="TrainerName" id="trainerName" name="selectedCode">
+                        <option value="">Select Trainer</option>
+                        @foreach (var item in lookup.GetAllTrainer())
                         {
-                            <option value="@item.NameEn">@item.NameEn</option>
+                            <option value="@item.Id">@item.NameEn</option>
                         }
                     </select>
                 </div>
-
-                <script>
-                    function disableSelect(select) {
-                        select.disabled = true;
-                    }
-                </script>
-
-                <br />
-                <hr />
-                <div class="col-md-6">
-
-                    <div class="mb-3">
-                        <input type="hidden" id="edit-id" value="-1">
-                        <label for="traineeName">Trainee Name:</label>
-                        <input type="text" id="traineeName" name="traineeName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="trainerName">Trainer Name:</label>
-                        <select asp-for="TrainerName" id="trainerName" name="selectedCode">
-                            <option value="">Select Trainer</option>
-                            @foreach (var item in lookup.GetAllTrainer())
-                            {
-                                <option value="@item.Id">@item.NameEn</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="topic">Training Topic:</label>
-                        <select asp-for="TrainingTopic" id="topic" name="selectedCode">
-                            <option value="">Select Topic</option>
-                            @foreach (var item in lookup.GetAllTopics())
-                            {
-                                <option value="@item.Id" data-topic-name="@item.NameEn">@item.NameEn</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3 form-select">
-                        <label for="type">Training Type:</label>
-                        <select asp-for="TrainingType" id="type" name="selectedCode">
-                            <option value="">Select Type</option>
-                            @foreach (var item in lookup.GetAllTypes())
-                            {
-                                <option value="@item.Id">@item.NameEn</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="endDate">End Date:</label>
-                        <input type="date" id="endDate" name="endDate" required>
-                    </div>
-                </div>
-                <div class="col text-center">
-                    <button type="button" id="preview-button" class="btn btn-outline-secondary">Add</button>
+                <div class="mb-3">
+                    <label for="topic">Training Topic:</label>
+                    <select asp-for="TrainingTopic" id="topic" name="selectedCode">
+                        <option value="">Select Topic</option>
+                        @foreach (var item in lookup.GetAllTopics())
+                        {
+                            <option value="@item.Id" data-topic-name="@item.NameEn">@item.NameEn</option>
+                        }
+                    </select>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="mb-3 form-select">
+                    <label for="type">Training Type:</label>
+                    <select asp-for="TrainingType" id="type" name="selectedCode">
+                        <option value="">Select Type</option>
+                        @foreach (var item in lookup.GetAllTypes())
+                        {
+                            <option value="@item.Id">@item.NameEn</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="startDate">Start Date:</label>
+                    <input type="date" id="startDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" name="startDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="endDate">End Date:</label>
+                    <input type="date" id="endDate" name="endDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                </div>
+            </div>
+            <div class="col text-center">
+                <button type="button" id="preview-button" class="btn btn-outline-secondary">Add</button>
+            </div>
         </div>
-    </form>
-    <br />
-    <hr />
-    <table id="session-table" class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Trainee Name</th>
-                <th>Trainer Name</th>
-                <th>Topic</th>
-                <th>Type</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <div class="col text-center">
-        <button type="button" id="insert-button" class="btn btn-primary">Save Changes</button>
-        <button type="button" id="" class="btn btn-secondery">Close</button>
-
     </div>
+</form>
+<br />
+<hr />
+<table id="session-table" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Trainee Name</th>
+            <th>Trainer Name</th>
+            <th>Topic</th>
+            <th>Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // Initialize initialData as an empty array
-        const initialData = [];
 
-        // Function to populate the table with data
-        function populateTable(data) {
-            const tableBody = document.querySelector("#session-table tbody");
-            tableBody.innerHTML = "";
+<div class="col text-center">
+    <button type="button" id="insert-button" class="btn btn-primary">Save Changes</button>
+    <button type="button" id="close-button" class="btn btn-secondary">Close</button>
+</div>
 
-            data.forEach(session => @SessionRepo.FindByYear("2023"){
-                const row = tableBody.insertRow();
-                row.innerHTML = `
-                                <td>${session.traineeName}</td>
-                                <td>${session.trainerName}</td>
-                                <td>${session.topic}</td>
-                                <td>${session.type}</td>
-                                <td>${session.startDate}</td>
-                                <td>${session.endDate}</td>
-                                <td><button type="button" class="btn btn-danger">Remove</button></td>
-                            `;
-            });
+<script>
+    $(document).ready(function () {
+        var sessionData = []; // Create an empty array  for session data
+
+        function areInputFieldsEmpty() {
+            return (
+                $("#traineeName").val() === '' ||
+                $("#trainerName").val() === '' ||
+                $("#topic").val() === '' ||
+                $("#type").val() === '' ||
+                $("#startDate").val() === '' ||
+                $("#endDate").val() === ''
+            );
         }
 
-        // Function to add a new session to the table and initialData array
-        function addSessionToTable() {
-            const traineeName = document.querySelector("#traineeName").value;
-            const trainerName = document.querySelector("#trainerName").value;
-            const topic = document.querySelector("#topic").value;
-            const type = document.querySelector("#type").value;
-            const startDate = document.querySelector("#startDate").value;
-            const endDate = document.querySelector("#endDate").value;
+        function getSelectedTopicName(selectedValue) {
+            var selectedOption = $("#topic option[value='" + selectedValue + "']");
+            return selectedOption.data("topic-name") || "Unknown";
+        }
 
-            // Create a new session object
-            const newSession = {
-                traineeName,
-                trainerName,
-                topic,
-                type,
-                startDate,
-                endDate
+        $("#preview-button").click(function () {
+            if (areInputFieldsEmpty()) {
+                alert("Please fill in all fields before adding a row.");
+                return;
+            }
+
+            var session = {
+                TraineeName: $("#traineeName").val(),
+                TrainerNameId: $("#trainerName").val(),
+                TrainingTopicId: $("#topic").val(),
+                TrainingTypeId: $("#type").val(),
+                StartDate: $("#startDate").val(),
+                ExpectedEndDate: $("#endDate").val()
             };
 
-            // Add the new session to the initialData array
-            initialData.push(newSession);
+            addSessionToTable(session); // Add the session data to the table
+            sessionData.push(session);
 
-            // Add the new session to the table
-            const tableBody = document.querySelector("#session-table tbody");
-            const row = tableBody.insertRow();
-            row.innerHTML = `
-                            <td>${traineeName}</td>
-                            <td>${trainerName}</td>
-                            <td>${topic}</td>
-                            <td>${type}</td>
-                            <td>${startDate}</td>
-                            <td>${endDate}</td>
-                            <td><button type="button" class="btn btn-danger">Remove</button></td>
-                        `;
 
-            // Clear input fields after adding a session
-            document.querySelector("#traineeName").value = "";
-            document.querySelector("#trainerName").value = "";
-            document.querySelector("#topic").value = "";
-            document.querySelector("#type").value = "";
-            document.querySelector("#startDate").value = "";
-            document.querySelector("#endDate").value = "";
+            // Clear form
+            $("#traineeName").val('');
+            $("#trainerName").val('');
+            $("#topic").val('');
+            $("#type").val('');
+            $("#startDate").val('');
+            $("#endDate").val('');
+
+
+
+
+        });
+
+
+        // Function to add session data to the table
+        function addSessionToTable(session) {
+            const tableBody = $("#session-table tbody");
+            const startDate = new Date(session.StartDate);
+            const endDate = new Date(session.ExpectedEndDate);
+
+            const row = `<tr>
+                    <td>${session.TraineeName}</td>
+                    <td>${session.TrainerNameId}</td>
+                    <td>${session.TrainingTopicId}</td>
+                    <td>${session.TrainingTypeId}</td>
+                    <td>${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-${startDate.getDate().toString().padStart(2, '0')}</td>
+                    <td>${endDate.getFullYear()}-${(endDate.getMonth() + 1).toString().padStart(2, '0')}-${endDate.getDate().toString().padStart(2, '0')}</td>
+                    <td><button type="button" class="btn btn-danger">Remove</button></td>
+                </tr>`;
+
+            tableBody.append(row);
         }
 
-        // Add event listeners
-        document.querySelector("#preview-button").addEventListener("click", addSessionToTable);
-        document.querySelector("#insert-button").addEventListener("click", saveChanges);
+        // Send session data via AJAX when "Save Changes" is clicked
+        $("#insert-button").click(function () {
+            if (sessionData.length === 0) {
+                alert("No sessions to save.");
+                return;
+            }
 
-        // Function to save changes
-        function saveChanges() {
             $.ajax({
-                url: "/Sessions/Update", // Replace with the correct URL
+                url: "/Session/Create",
                 method: "POST",
                 contentType: "application/json",
-                data: JSON.stringify(initialData),
+                data: JSON.stringify(sessionData),
                 success: function (response) {
                     alert(response.message);
+                    sessionData = []; // Clear session array
                     $("#session-table tbody").empty();
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr, status, error);
                 }
             });
-        }
-    </script>
+        });
+
+
+    });
+
+    const initialData = [];
+
+    function populateTable(data) {
+        const tableBody = document.querySelector("#session-table tbody");
+        tableBody.innerHTML = "";
+
+        data.forEach(session => {
+            const row = tableBody.insertRow();
+            const startDate = new Date(session.startDate);
+            const endDate = new Date(session.expectedEndDate);
+
+            row.innerHTML = `
+            <td>${session.traineeName}</td>
+            <td>${session.trainerName.nameEn}</td>
+            <td>${session.trainingTopic.nameEn}</td>
+            <td>${session.trainingType.nameEn}</td>
+            <td>${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-${startDate.getDate().toString().padStart(2, '0')}</td>
+            <td>${endDate.getFullYear()}-${(endDate.getMonth() + 1).toString().padStart(2, '0')}-${endDate.getDate().toString().padStart(2, '0')}</td>
+            <td><button type="button" class="btn btn-danger">Remove</button></td>
+        `;
+        });
+
+    }
+
+
+    function fetchDataAndPopulateTable() {
+
+        $.ajax({
+            url: "/Session/FindByYear",
+            method: "GET",
+            data: { year: "2023" },
+            success: function (data) {
+
+                populateTable(data);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr, status, error);
+            }
+        });
+    }
+
+
+    document.addEventListener("DOMContentLoaded", fetchDataAndPopulateTable);
+
+    document.getElementById("preview-buttson").addEventListener("click", function () {
+
+        const formData = {
+            Year: document.getElementById("year").value,
+            TraineeName: document.getElementById("traineeName").value,
+            TrainerNameId: document.getElementById("trainerName").value,
+            TrainingTopicId: document.getElementById("topic").value,
+            TrainingTypeId: document.getElementById("type").value,
+            StartDate: document.getElementById("startDate").value,
+            ExpectedEndDate: document.getElementById("endDate").value
+        };
+
+
+    });
+</script>
+
+
+

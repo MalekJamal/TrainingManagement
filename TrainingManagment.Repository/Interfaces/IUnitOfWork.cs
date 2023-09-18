@@ -13,6 +13,7 @@ namespace TrainingManagment.Repository.Interfaces
 
         // here if I need to use the ISessionsRepo
         ISessionsRepository Sessions { get; }
+        ILookupRepository Lookups { get; }
 
 
         Task<int> Complete();

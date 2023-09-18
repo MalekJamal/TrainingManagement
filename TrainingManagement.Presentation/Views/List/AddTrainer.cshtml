@@ -1,0 +1,42 @@
+﻿@model AddLookupViewModel
+
+@{
+    ViewData["Title"] = "Add Trainer";
+}
+
+<div class="container">
+    <h3 class="text-primary">Trainer</h3>
+    <hr />
+    <form asp-action="AddTrainer" method="post">
+        <div class="card mx-auto" style="width: 50%;">
+            <div class="card-header text-black-50">
+                <h5 class="card-title">Add New Trainer</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label asp-for="NameEn"></label>
+                    <input asp-for="NameEn" class="form-control" maxlength="100" />
+                    <span asp-validation-for="NameEn" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NameAr"></label>
+                    <input asp-for="NameAr" class="form-control" maxlength="100" />
+                    <span asp-validation-for="NameAr" class="text-danger"></span>
+                </div>
+                <div>
+                    <input asp-for="LookupCategoryId" value="500" type="hidden"/>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

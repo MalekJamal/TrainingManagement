@@ -1,12 +1,16 @@
-﻿<div class="container">
-    <h3 class="text-primary ">Topics </h3>
-    <hr />
+﻿@{
+    ViewData["Title"] = "Topics";
+}
+<div class="container m-2">
+    <a asp-action="AddTopic" class="btn btn-primary m-4 p-2">Add New Topic</a>
 
-    <table id="myTable" class="table table-bordered table-striped table-responsive table-hover w-100">
+    <div class="table-responsive">
+    </div>
+    <table id="myTable" class="table table-bordered table-striped table-hover">
         <tbody class="w-100"></tbody>
     </table>
-
 </div>
+
 
 @section Scripts
     {
@@ -16,7 +20,10 @@
 
         $(function () {
             LoadData();
+
+
         });
+
 
         function LoadData() {
             if (dataTable) {
@@ -33,7 +40,8 @@
                     $.each(data, function (i, item) {
                         var rows = "<tr>"
                             + "<td>" + item.id + "</td>"
-                            + "<td>" + item.nameEn+ "</td>"
+                            + "<td>" + item.nameEn + "</td>"
+                            + "<td>" + item.nameAr + "</td>"
                             + "</tr>";
                         $('#myTable tbody').append(rows);
                     });
@@ -45,6 +53,7 @@
                         "columns": [
                             { "title": "Topic ID" },
                             { "title": "Topic Name" },
+                            { "title": "موضوعات التدريب" },
                         ]
                     });
                 },
@@ -56,5 +65,6 @@
             return false;
         }
     </script>
+    <partial name="_ValidationScriptsPartial" />
 
 }

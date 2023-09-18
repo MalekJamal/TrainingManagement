@@ -7,9 +7,9 @@ using TrainingManagment.Domain.Models;
 
 namespace TrainingManagment.Repository.Interfaces
 {
-    public interface ILookup : IBaseRepository<Lookup>
+    public interface ILookupRepository : IBaseRepository<Lookup>
     {
-
+        // any method need to be added for the Lookup specially should be add here and implemented in LookupRepository
 
         public List<Lookup> GetAllTopics();
 
@@ -22,6 +22,8 @@ namespace TrainingManagment.Repository.Interfaces
         public List<Lookup> GetAllYear();
 
         public List<Lookup> GetAllTrainer();
+
+
 
     }
 }

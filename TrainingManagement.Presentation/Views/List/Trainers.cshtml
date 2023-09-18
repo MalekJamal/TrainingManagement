@@ -1,12 +1,16 @@
-﻿<div class="container">
-    <h3 class="text-primary ">Trainers</h3>
-    <hr />
+﻿@{
+    ViewData["Title"] = "Trainers";
+}
+<div class="container m-2">
+    <a asp-action="AddTrainer" class="btn btn-primary m-4 p-2">Add New Trainer</a>
 
-    <table id="myTable" class="table table-bordered table-striped table-responsive table-hover w-100">
+    <div class="table-responsive">
+    </div>
+    <table id="myTable" class="table table-bordered table-striped table-hover">
         <tbody class="w-100"></tbody>
     </table>
-
 </div>
+
 
 @section Scripts
     {
@@ -34,6 +38,7 @@
                         var rows = "<tr>"
                             + "<td>" + item.id + "</td>"
                             + "<td>" + item.nameEn + "</td>"
+                            + "<td>" + item.nameAr + "</td>"
                             + "</tr>";
                         $('#myTable tbody').append(rows);
                     });
@@ -43,8 +48,9 @@
                         "autoWidth": "true",
                         "paging": "true",
                         "columns": [
-                            { "title": "Trainers ID" },
-                            { "title": "Trainers Name" },
+                            { "title": "Trainer ID" },
+                            { "title": "Trainer Name" },
+                            { "title": "أسم المدرب" },
                         ]
                     });
                 },
@@ -56,5 +62,6 @@
             return false;
         }
     </script>
+    <partial name="_ValidationScriptsPartial" />
 
 }

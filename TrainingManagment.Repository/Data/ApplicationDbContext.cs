@@ -115,7 +115,7 @@ namespace TrainingManagment.Repository.Data
                 },
 
                 // Training Topics Lookups
-                new Lookup { Id = 3, Code = 1, NameEn = "DotNet", NameAr = ".Net", LookupCategoryId = 200,
+                new Lookup { Id = 3, Code = 1, NameEn = "Dot Net", NameAr = ".Net", LookupCategoryId = 200,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -123,7 +123,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 4, Code = 2, NameEn = "BusinessAnalyst", NameAr = "محلل أعمال", LookupCategoryId = 200,
+                new Lookup { Id = 4, Code = 2, NameEn = "Business Analyst", NameAr = "محلل أعمال", LookupCategoryId = 200,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -131,7 +131,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 5, Code = 3, NameEn = "QualityControl", NameAr = "مراقبة الجودة", LookupCategoryId = 200,
+                new Lookup { Id = 5, Code = 3, NameEn = "Quality Control", NameAr = "مراقبة الجودة", LookupCategoryId = 200,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -147,7 +147,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 7, Code = 5, NameEn = "UI_UX", NameAr = "واجهة المستخدم وتجربة المستخدم", LookupCategoryId = 200,
+                new Lookup { Id = 7, Code = 5, NameEn = "UI/UX", NameAr = "واجهة المستخدم وتجربة المستخدم", LookupCategoryId = 200,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -155,7 +155,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 8, Code = 6, NameEn = "HumanResources", NameAr = "الموارد البشرية", LookupCategoryId = 200,
+                new Lookup { Id = 8, Code = 6, NameEn = "Human Resources", NameAr = "الموارد البشرية", LookupCategoryId = 200,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -207,7 +207,7 @@ namespace TrainingManagment.Repository.Data
                 },
 
                 // Training Result Lookups
-                new Lookup { Id = 14, Code = 1, NameEn = "Joining_TPS_Team", NameAr = "الانضمام إلى فريق TPS", LookupCategoryId = 400,
+                new Lookup { Id = 14, Code = 1, NameEn = "Joining TPS Team", NameAr = "الانضمام إلى فريق TPS", LookupCategoryId = 400,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -215,7 +215,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 15, Code = 2, NameEn = "On_Hold", NameAr = "معلق", LookupCategoryId = 400,
+                new Lookup { Id = 15, Code = 2, NameEn = "On Hold", NameAr = "معلق", LookupCategoryId = 400,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -242,7 +242,7 @@ namespace TrainingManagment.Repository.Data
 
                 // Trainer Lookups
 
-                new Lookup { Id = 18, Code = 1, NameEn = "Khalid_Salameh", NameAr = "خالد سلامة", LookupCategoryId = 500,
+                new Lookup { Id = 18, Code = 1, NameEn = "Khalid Salameh", NameAr = "خالد سلامة", LookupCategoryId = 500,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -250,7 +250,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 19, Code = 2, NameEn = "Lamees_Hourani", NameAr = "لميس حوراني", LookupCategoryId = 500,
+                new Lookup { Id = 19, Code = 2, NameEn = "Lamees Hourani", NameAr = "لميس حوراني", LookupCategoryId = 500,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -258,7 +258,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 20, Code = 3, NameEn = "Mariam_AlSadawi", NameAr = "مريم السعداوي", LookupCategoryId = 500,
+                new Lookup { Id = 20, Code = 3, NameEn = "Mariam Al Sadawi", NameAr = "مريم السعداوي", LookupCategoryId = 500,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -266,7 +266,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 21, Code = 4, NameEn = "Mohammad_Hamad", NameAr = "محمد حماد", LookupCategoryId = 500,
+                new Lookup { Id = 21, Code = 4, NameEn = "Mohammad Hamad", NameAr = "محمد حماد", LookupCategoryId = 500,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -274,7 +274,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 22, Code = 5, NameEn = "Mohammad_Ibdah", NameAr = "محمد عبده", LookupCategoryId = 500,
+                new Lookup { Id = 22, Code = 5, NameEn = "Mohammad Ibdah", NameAr = "محمد عبده", LookupCategoryId = 500,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -290,7 +290,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 24, Code = 7, NameEn = "Zakaria_Lafi", NameAr = "زكريا لافي", LookupCategoryId = 500,
+                new Lookup { Id = 24, Code = 7, NameEn = "Zakaria Lafi", NameAr = "زكريا لافي", LookupCategoryId = 500,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -298,7 +298,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 25, Code = 8, NameEn = "Ahmed_Sweilem", NameAr = "أحمد سويلم", LookupCategoryId = 500,
+                new Lookup { Id = 25, Code = 8, NameEn = "Ahmed Sweilem", NameAr = "أحمد سويلم", LookupCategoryId = 500,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -308,7 +308,7 @@ namespace TrainingManagment.Repository.Data
                 },
 
                 // Year Lookups
-                new Lookup { Id = 26, Code = 2023, NameEn = "2023", NameAr = "Year2023", LookupCategoryId = 600,
+                new Lookup { Id = 26, Code = 2023, NameEn = "2023", NameAr = "2023", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -316,7 +316,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 27, Code = 2024, NameEn = "2024", NameAr = "Year2024", LookupCategoryId = 600,
+                new Lookup { Id = 27, Code = 2024, NameEn = "2024", NameAr = "2024", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -324,7 +324,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 28, Code = 2025, NameEn = "2025", NameAr = "Year2025", LookupCategoryId = 600,
+                new Lookup { Id = 28, Code = 2025, NameEn = "2025", NameAr = "2025", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -332,7 +332,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 29, Code = 2026, NameEn = "2026", NameAr = "Year2026", LookupCategoryId = 600,
+                new Lookup { Id = 29, Code = 2026, NameEn = "2026", NameAr = "2026", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -340,7 +340,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 30, Code = 2027, NameEn = "2027", NameAr = "Year2027", LookupCategoryId = 600,
+                new Lookup { Id = 30, Code = 2027, NameEn = "2027", NameAr = "2027", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -348,7 +348,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 31, Code = 2028, NameEn = "2028", NameAr = "Year2028", LookupCategoryId = 600,
+                new Lookup { Id = 31, Code = 2028, NameEn = "2028", NameAr = "2028", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -356,7 +356,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 32, Code = 2029, NameEn = "2029", NameAr = "Year2029", LookupCategoryId = 600,
+                new Lookup { Id = 32, Code = 2029, NameEn = "2029", NameAr = "2029", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -364,7 +364,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 33, Code = 2030, NameEn = "2030", NameAr = "Year2030", LookupCategoryId = 600,
+                new Lookup { Id = 33, Code = 2030, NameEn = "2030", NameAr = "2030", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -372,7 +372,7 @@ namespace TrainingManagment.Repository.Data
                     ModifyBy = null,
                     Description = ""
                 },
-                new Lookup { Id = 34, Code = 2031   , NameEn = "2031", NameAr = "Year2031", LookupCategoryId = 600,
+                new Lookup { Id = 34, Code = 2031   , NameEn = "2031", NameAr = "2031", LookupCategoryId = 600,
                     CreatedBy = "Malek Hamdan",
                     IsActive = true,
                     IsDeleted = false,
@@ -384,5 +384,6 @@ namespace TrainingManagment.Repository.Data
 
             );
         }
+
     }
 }

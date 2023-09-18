@@ -10,7 +10,7 @@ using TrainingManagment.Repository.Interfaces;
 
 namespace TrainingManagment.Repository.Repositories
 {
-    public class LookupRepository : BaseRepository<Lookup>, ILookup
+    public class LookupRepository : BaseRepository<Lookup>, ILookupRepository
     {
         private readonly ApplicationDbContext _context;
 

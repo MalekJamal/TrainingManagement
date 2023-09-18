@@ -138,7 +138,7 @@
 <div class="row">
     <div>
         <a asp-action="Create" class="btn btn-dark m-4">Create New Session</a>
-        <a asp-action="UpdateCurrent" asp-route-year="@DateTime.Now.Year" class="btn btn-dark m-4">Update Current Session</a>
+        <a asp-action="Update" class="btn btn-dark m-4">Update Current Session</a>
     </div>
 </div>
 
@@ -182,9 +182,9 @@
                 <tr>
                     <td>@session.Year</td>
                     <td>@session.TraineeName</td>
-                    <td>@session.TrainerNameId</td>
-                    <td>@session.TrainingTopicId</td>
-                    <td>@session.TrainingTypeId</td>
+                    <td>@session.TrainerName.NameEn</td>
+                    <td>@session.TrainingTopic.NameEn</td>
+                    <td>@session.TrainingType.NameEn</td>
                     <td>@session.StartDate.ToString("yyyy-MM-dd")</td>
                     <td>@session.ExpectedEndDate.ToString("yyyy-MM-dd")</td>
                     
@@ -216,6 +216,7 @@
 
 @section Scripts{
     @{
+        
         <partial name="_ValidationScriptsPartial" />
     }
 }

@@ -6,15 +6,8 @@
 @inject LookupRepository lookup;
  
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Session Management</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-    <form id="session-entry-form">
+
+    <form id="session-entry-form" class="m-4">
 
         <div class="border p-3 mt-4">
             <div class="row pb-2">
@@ -122,7 +115,18 @@
 
     </div>
 
-    <script>
+
+
+
+
+
+
+
+
+
+@section Scripts{
+
+    <script type="text/javascript">
         $(document).ready(function () {
             var editingRow = null;
 
@@ -285,17 +289,7 @@
             });
         });
     </script>
-</body>
-</html>
 
-
-
-
-
-
-
-
-@section Scripts{
     @{
         <partial name="_ValidationScriptsPartial" />
     }
