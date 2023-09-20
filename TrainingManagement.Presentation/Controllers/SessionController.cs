@@ -18,6 +18,7 @@ using TrainingManagment.Domain.consts;
 using TrainingManagment.Repository.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TrainingManagement.Domain.ViewModels;
 
 namespace TrainingManagment.Presentation.Controllers
 {
@@ -31,20 +32,129 @@ namespace TrainingManagment.Presentation.Controllers
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
+        public SessionViewModel MapSessionToViewModel(Session session)
+        {
+            return new SessionViewModel
+            {
+                SessionId = session.SessionId,
+                StartDate = session.StartDate,
+                ExpectedEndDate = session.ExpectedEndDate,
+                ActualEndDate = session.ActualEndDate,
+                Year = session.Year,
+                TraineeName = session.TraineeName,
+                FinalPresentationDate = session.FinalPresentationDate,
+                EvaluationScore = session.EvaluationScore,
+                Comment = session.Comment,
+                TrainingResultId = session.TrainingResultId,
+                TrainingTopicId = session.TrainingTopicId,
+                TrainingTypeId = session.TrainingTypeId,
+                TrainingStatusId = session.TrainingStatusId,
+                TrainerNameId = session.TrainerNameId,
+                TrainerName = session.TrainerName,
+                TrainingStatus = session.TrainingStatus,
+                TrainingResult = session.TrainingResult,
+                TrainingTopic = session.TrainingTopic,
+                TrainingType = session.TrainingType,
+                ResultsList = _unitOfWork.Lookups.GetAllResults(),
+                TopicsList = _unitOfWork.Lookups.GetAllTopics(),
+                TypesList = _unitOfWork.Lookups.GetAllTypes(),
+                TrainersList = _unitOfWork.Lookups.GetAllTrainer(),
+                StatusList = _unitOfWork.Lookups.GetAllStatus(),
+                YearsList = _unitOfWork.Lookups.GetAllYear(),
+            };
+        }
 
+        public async Task<SessionViewModel> MapSessionToViewModelWithAll(Session session)
+        {
+            return new SessionViewModel
+            {
+                SessionId = session.SessionId,
+                StartDate = session.StartDate,
+                ExpectedEndDate = session.ExpectedEndDate,
+                ActualEndDate = session.ActualEndDate,
+                Year = session.Year,
+                TraineeName = session.TraineeName,
+                FinalPresentationDate = session.FinalPresentationDate,
+                EvaluationScore = session.EvaluationScore,
+                Comment = session.Comment,
+                TrainingResultId = session.TrainingResultId,
+                TrainingTopicId = session.TrainingTopicId,
+                TrainingTypeId = session.TrainingTypeId,
+                TrainingStatusId = session.TrainingStatusId,
+                TrainerNameId = session.TrainerNameId,
+                ResultsList = _unitOfWork.Lookups.GetAllResults(),
+                TopicsList = _unitOfWork.Lookups.GetAllTopics(),
+                TypesList = _unitOfWork.Lookups.GetAllTypes(),
+                TrainersList = _unitOfWork.Lookups.GetAllTrainer(),
+                StatusList = _unitOfWork.Lookups.GetAllStatus(),
+                YearsList = _unitOfWork.Lookups.GetAllYear(),
+                TrainerName = session.TrainerName,
+                TrainingStatus = session.TrainingStatus,
+                TrainingResult = session.TrainingResult,
+                TrainingTopic = session.TrainingTopic,
+                TrainingType = session.TrainingType,
+                SessionsList = await _unitOfWork.Sessions.FindAllAsync(s => s.IsActive == true && s.IsDeleted == false, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus", "TrainingResult" })
+
+
+            };
+        }
+
+        public Session MapViewModelToSession(SessionViewModel viewModel)
+        {
+            return new Session
+            {
+                SessionId = viewModel.SessionId,
+                StartDate = viewModel.StartDate,
+                ExpectedEndDate = viewModel.ExpectedEndDate,
+                ActualEndDate = viewModel.ActualEndDate,
+                Year = viewModel.Year,
+                TraineeName = viewModel.TraineeName,
+                FinalPresentationDate = viewModel.FinalPresentationDate,
+                EvaluationScore = viewModel.EvaluationScore,
+                Comment = viewModel.Comment,
+                TrainingResultId = viewModel.TrainingResultId,
+                TrainingTopicId = viewModel.TrainingTopicId,
+                TrainingTypeId = viewModel.TrainingTypeId,
+                TrainingStatusId = viewModel.TrainingStatusId,
+                TrainerNameId = viewModel.TrainerNameId,
+
+            };
+        }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             try
             {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(s => s.SessionId > 0, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus" });
+                IEnumerable<Session> session = await _unitOfWork.Sessions.FindAllAsync(s => s.IsActive == true && s.IsDeleted == false, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus" });
 
-                if (sessions == null)
+                if (session == null)
                 {
                     return NotFound();
 
                 }
-                return View(sessions);
+
+                //SessionViewModel session2   = new SessionViewModel();
+                //session2 = MapSessionToViewModel(session.FirstOrDefault());
+                /////
+                SearchSessionViewModel sessionSearchViewModel = new SearchSessionViewModel();
+
+                List<SessionViewModel> sessionsViewModel = new List<SessionViewModel>();
+                foreach (Session session1 in session)
+                {
+                    sessionsViewModel.Add(MapSessionToViewModel(session1));
+                }
+
+                ViewBag.SessionsViewModel = sessionsViewModel;
+                ViewBag.Types = _unitOfWork.Lookups.GetAllTypes().ToList();
+                ViewBag.Topics = _unitOfWork.Lookups.GetAllTopics().ToList();
+                ViewBag.Trainers = _unitOfWork.Lookups.GetAllTrainer().ToList();
+                ViewBag.Status = _unitOfWork.Lookups.GetAllStatus().ToList();
+                ViewBag.Years = _unitOfWork.Lookups.GetAllYear().ToList();
+                ViewBag.Results = _unitOfWork.Lookups.GetAllResults().ToList();
+
+
+                return View(sessionSearchViewModel);
+
             }
             catch (Exception ex)
             {
@@ -53,6 +163,8 @@ namespace TrainingManagment.Presentation.Controllers
             }
 
         }
+
+
 
 
         [HttpGet]
@@ -86,7 +198,7 @@ namespace TrainingManagment.Presentation.Controllers
                         item.CreatedOn = DateTime.Now;
                         item.IsActive = true;
                         item.IsDeleted = false;
-                        item.Year = DateTime.Now.Year.ToString();
+                        item.Year = "2024";
 
                         await _unitOfWork.Sessions.AddAsync(item);
                     }
@@ -103,140 +215,109 @@ namespace TrainingManagment.Presentation.Controllers
                 return Json(new { error = ex.Message });
             }
         }
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(Session session)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(session);
-        //    }
-        //    try
-        //    {
-        //        var exist = await _unitOfWork.Sessions.FindAllAsync(b => (int)b.Year == (int)session.Year);
-        //        if(exist.Count() >0)
-        //        {
-        //            ModelState.AddModelError("Year", "This Year Already exist please update the session");
-        //            return View();
-        //        }
-        //        // Call the repository layer to add the entity.
-        //        var result = await _unitOfWork.Sessions.AddAsync(session);
-
-        //        // I will use _unitOfWork.Complete(), when add, update and delete from database
-        //        int a = await _unitOfWork.Complete();
-
-        //        // Handle success and redirection.
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Log the exception.
-        //        _logger.LogError(ex, "An error occurred while adding a session.");
-
-        //        // Handle the exception, display a generic error message, and possibly redirect to an error page.
-        //        ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
-        //        return View(session);
-        //    }
-
-        //}
-
-        public async Task<IActionResult> Search(SessionViewModel session)
+        [HttpGet]
+        public async Task<IActionResult> Search(SearchSessionViewModel session)
         {
-            if (session.Year != "" || session.TrainingType.NameEn == "" &&
-                session.TrainerName.NameEn == "" && session.TraineeName == "" &&
-                session.TrainingStatus.NameEn == "" && session.TrainingResult.NameEn == "" &&
-                session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+            // Start with an initial query to get all active and non-deleted sessions
+            var query = await _unitOfWork.Sessions.FindAllAsync(s => s.IsActive == true && s.IsDeleted == false, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus" });
+
+            // Build the query dynamically based on search criteria
+            if (session.Year != null)
             {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.Year == session.Year);
-                return View(sessions);
-            }
-            if (session.Year != null && session.TrainingType.NameEn == "" &&
-              session.TrainerName.NameEn == "" && session.TraineeName == null &&
-              session.TrainingStatus.NameEn == "" && session.TrainingResult.NameEn == "" &&
-             !session.StartDate.Equals(null) || !session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.ExpectedEndDate.Date == session.ExpectedEndDate);
-                return View(sessions);
+                query = query.Where(s => s.Year == session.Year);
             }
 
-            if (session.Year == "" && session.TrainingType.NameEn != "" ||
-               session.TrainerName.NameEn == "" && session.TraineeName == null &&
-               session.TrainingStatus.NameEn == "" && session.TrainingResult.NameEn == "" &&
-               session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+            if (session.Type != null)
             {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.TrainingType.NameEn == session.TrainingType.NameEn);
-                return View(sessions);
+                query = query.Where(s => s.TrainingType.NameEn == session.Type);
             }
 
-            if (session.Year == "" && session.TrainingType.NameEn == "" &&
-              session.TrainerName.NameEn != "" || session.TraineeName == null &&
-              session.TrainingStatus.NameEn == "" && session.TrainingResult.NameEn == "" &&
-              session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+            if (session.TrainerName != null)
             {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.TrainerName.NameEn == session.TrainerName.NameEn);
-                return View(sessions);
+                query = query.Where(s => s.TrainerName.NameEn == session.TrainerName);
             }
 
-            if (session.Year == "" && session.TrainingType.NameEn == "" &&
-              session.TrainerName.NameEn == "" && session.TraineeName != null ||
-              session.TrainingStatus.NameEn == "" && session.TrainingResult.NameEn == "" &&
-              session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+            if (session.TraineeName != null)
             {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.TraineeName.Contains(session.TraineeName));
-                return View(sessions);
+                query = query.Where(s => s.TraineeName.Contains(session.TraineeName));
             }
+            //var space = session.StartDate?.Date.ToString().IndexOf(' ');
+            //var sd = session.StartDate?.Date.ToString().Substring(0, space);
+            //if (sd != null)
+            //{
+            //    query = query.Where(s => s.StartDate.Date.ToString().Substring(0, space) == sd);
+            //}
 
-            if (session.Year == "" && session.TrainingType.NameEn == "" &&
-              session.TrainerName.NameEn == "" && session.TraineeName == null &&
-              session.TrainingStatus.NameEn != "" || session.TrainingResult.NameEn == "" &&
-              session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
+            //space = session.EndDate.Date.ToString().IndexOf(' ');
+            //var ed = session.StartDate.Date.ToString().Substring(0, space);
+            //if (sd != null)
+            //{
+            //    query = query.Where(s => s.ExpectedEndDate.Date.ToString().Substring(0, space) == ed);
+            //}
+
+            //if (session.Status != null)
+            //{
+            //    query = query.Where(s => s.TrainingStatus.NameEn == session.Status);
+            //}
+
+            //if (session.Result != null)
+            //{
+            //    query = query.Where(s => s.TrainingResult.NameEn == session.Result);
+            //}
+
+            // Execute the final query and retrieve the results
+            var filteredSessions = query.ToList();
+
+            // Create and populate the view model with the filtered sessions
+            var viewModel = new SearchSessionViewModel
             {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.TrainingStatus.NameEn == session.TrainingStatus.NameEn);
-                return View(sessions);
-            }
+                Sessions = filteredSessions
+            };
 
-            if (session.Year == "" && session.TrainingType.NameEn == "" &&
-              session.TrainerName.NameEn == "" && session.TraineeName == null &&
-              session.TrainingStatus.NameEn == "" && session.TrainingResult.NameEn != "" ||
-              session.StartDate.Equals(null) && session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.TrainingResult == session.TrainingResult);
-                return View(sessions);
-            }
-
-            if (session.Year == "" && session.TrainingType.NameEn == "" &&
-              session.TrainerName.NameEn == "" && session.TraineeName == null &&
-              session.TrainingStatus.NameEn == "" && session.TrainingResult.NameEn == "" &&
-              session.StartDate.Equals(null) || session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.StartDate.Date == session.StartDate);
-                return View(sessions);
-            }
-
-            if (session.Year == "" && session.TrainingType.NameEn == "" &&
-              session.TrainerName.NameEn == "" && session.TraineeName == null &&
-              session.TrainingStatus.NameEn == "" && session.TrainingResult.NameEn == "" &&
-             !session.StartDate.Equals(null) || !session.ExpectedEndDate.Equals(null))
-            {
-                var sessions = await _unitOfWork.Sessions.FindAllAsync(b => b.ExpectedEndDate.Date == session.ExpectedEndDate);
-                return View(sessions);
-            }
-
-            return View();
+            return View(viewModel);
         }
 
-      
 
-        public IActionResult Update()
-        {
-            return View();
-        }
+
 
         public List<Session> FindByYear(string year)
         {
             return _unitOfWork.Sessions.FindByYear(year);
         }
+        [HttpGet]
+        public async Task<IActionResult> Update(string Year)
+        {
+
+            IEnumerable<Session> session = await _unitOfWork.Sessions.FindAllAsync(s => s.IsActive == true && s.IsDeleted == false && s.Year == Year, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus" });
+
+            if (session == null)
+            {
+                return NotFound();
+
+            }
+
+            SessionViewModel sessionViewModel = new SessionViewModel();
+
+            List<SessionViewModel> sessionsViewModel = new List<SessionViewModel>();
+
+            foreach (Session session1 in session)
+            {
+                sessionsViewModel.Add(MapSessionToViewModel(session1));
+            }
+
+            ViewBag.SessionsViewModel = sessionsViewModel;
+            ViewBag.Types = _unitOfWork.Lookups.GetAllTypes().ToList();
+            ViewBag.Topics = _unitOfWork.Lookups.GetAllTopics().ToList();
+            ViewBag.Trainers = _unitOfWork.Lookups.GetAllTrainer().ToList();
+            ViewBag.Status = _unitOfWork.Lookups.GetAllStatus().ToList();
+            ViewBag.Years = _unitOfWork.Lookups.GetAllYear().ToList();
+            ViewBag.Results = _unitOfWork.Lookups.GetAllResults().ToList();
+
+            return View(sessionViewModel);
+
+        }
+
+
 
         [HttpPost]
         public IActionResult Update([FromBody] List<Session> newSessionData)
@@ -253,13 +334,6 @@ namespace TrainingManagment.Presentation.Controllers
                         item.IsDeleted = false;
                         item.Year = "2023";
 
-
-                        //item.TrainingResult = _context.Lookup.Find(Session.TrainingResultId);
-                        //item.TrainingTopic = _context.Lookup.Find(SessionViewModel.TrainingTopicId);
-                        //item.TrainingType = _context.Lookup.Find(SessionViewModel.TrainingTypeId);
-                        //item.TrainingStatus = _context.Lookup.Find(SessionViewModel.TrainingStatusId);
-                        //item.TrainerName = _context.Lookup.Find(SessionViewModel.TrainerNameId);
-                        //item.LookupYear = _context.Lookup.Find(SessionViewModel.LookupYearId);
 
 
                         _unitOfWork.Sessions.AddAsync(item);
@@ -299,6 +373,33 @@ namespace TrainingManagment.Presentation.Controllers
                 _logger.LogError(ex, "An error occurred while retrieving sessions.");
                 return View();
             }
+        }
+
+
+        public async Task<IActionResult> UpdateSession(int Id)
+        {
+            var session = await _unitOfWork.Sessions.FindAsync(s => s.SessionId == Id, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus" });
+            SessionViewModel viewModel = await MapSessionToViewModelWithAll(session);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateSession(SessionViewModel UpdatedSession)
+        {
+
+            if (ModelState.IsValid)
+            {
+                Session afterUpdate = MapViewModelToSession(UpdatedSession);
+                afterUpdate.ModifyBy = this.User.Identity.Name;
+                afterUpdate.ModifyOn = DateTime.Now;
+
+                afterUpdate.CreatedBy = this.User.Identity.Name;
+                afterUpdate.IsActive = true;
+                _unitOfWork.Sessions.Update(afterUpdate);
+                await _unitOfWork.Complete();
+            }
+
+            return RedirectToAction("Index");
         }
 
     }

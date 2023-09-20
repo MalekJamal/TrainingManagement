@@ -43,6 +43,8 @@ namespace TrainingManagment.Domain.ViewModels
         public double? EvaluationScore { get; set; }
 
         [Display(Name = "Comment")]
+        [DataType(DataType.MultilineText)]
+
         public string Comment { get; set; }
 
         [Display(Name = "Training Result")]
@@ -60,16 +62,22 @@ namespace TrainingManagment.Domain.ViewModels
         [Display(Name = "Trainer Name")]
         public int? TrainerNameId { get; set; }
 
-        [Display(Name = "Lookup Year")]
-        public int? LookupYearId { get; set; }
+        //for lookup list
+        public List<Lookup> YearsList { get; set; }
+        public List<Lookup> TypesList { get; set; }
+        public List<Lookup> TopicsList { get; set; }
+        public List<Lookup> TrainersList { get; set; }
+        public List<Lookup> StatusList { get; set; }
+        public List<Lookup> ResultsList { get; set; }
 
-
-        // Navigation properties
+        //Navigation properties
         public Lookup TrainingResult { get; set; }
         public Lookup TrainingTopic { get; set; }
         public Lookup TrainingType { get; set; }
         public Lookup TrainingStatus { get; set; }
         public Lookup TrainerName { get; set; }
         public Lookup LookupYear { get; set; }
+
+        public IEnumerable<Session> SessionsList { get; set; }
     }
 }

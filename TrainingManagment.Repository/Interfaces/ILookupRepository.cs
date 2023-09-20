@@ -15,15 +15,13 @@ namespace TrainingManagment.Repository.Interfaces
 
         public List<Lookup> GetAllTypes();
 
-        public List<string> GetAllStatus();
+        public List<Lookup> GetAllStatus();
 
-        public List<string> GetAllResults();
+        public List<Lookup> GetAllResults();
 
         public List<Lookup> GetAllYear();
 
         public List<Lookup> GetAllTrainer();
-
-
 
     }
 }

@@ -32,7 +32,7 @@ namespace TrainingManagment.Presentation.Controllers
                 UserName = user.UserName,
                 FullName= user.FullName,
                 Email = user.Email,
-                Roles = _userManager.GetRolesAsync(user).Result // to avoid use the awiat
+                Roles = _userManager.GetRolesAsync(user).Result // to avoid use the await
 
             }).ToListAsync();
 
