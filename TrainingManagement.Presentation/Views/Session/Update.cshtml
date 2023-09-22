@@ -24,7 +24,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="trainerName">Trainer Name:</label>
-                        <select asp-for="TrainerName" id="trainerName" name="selectedCode">
+                    <select asp-for="TrainerName" id="trainerName" name="trainerName">
                             <option value="">Select Trainer</option>
                             @foreach (var item in ViewBag.Trainers)
                             {
@@ -34,7 +34,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="topic">Training Topic:</label>
-                        <select asp-for="TrainingTopic" id="topic" name="selectedCode">
+                    <select asp-for="TrainingTopic" id="topic" name="Topic">
                             <option value="">Select Topic</option>
                             @foreach (var item in ViewBag.Topics)
                             {
@@ -46,7 +46,7 @@
                 <div class="col-md-6">
                     <div class="mb-3 form-select">
                         <label for="type">Training Type:</label>
-                        <select asp-for="TrainingType" id="type" name="selectedCode">
+                    <select asp-for="TrainingType" id="type" name="type">
                             <option value="">Select Type</option>
                             @foreach (var item in ViewBag.Types)
                             {
@@ -56,11 +56,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                        <input type="date" id="startDate" name="startDate" required>
                     </div>
                     <div class="mb-3">
                         <label for="endDate">End Date:</label>
-                        <input type="date" id="endDate" name="endDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                        <input type="date" id="endDate" name="endDate" required>
                     </div>
                 </div>
                 <div class="col text-center">
@@ -157,7 +157,12 @@
             // Add click event handler for saving a session
             $("#preview-button").click(function () {
                 if (areInputFieldsEmpty()) {
-                    alert("Please fill in all fields before adding or editing a row.");
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please fill in all fields before adding or editing a row.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
                     return;
                 }
 
@@ -208,11 +213,19 @@
                     data: JSON.stringify(sessionData),
                     success: function (response) {
                         alert(response.message);
+                    console.log(response);
                         sessionData = [];
                         populateTable();
                     },
                     error: function (xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                         console.error(xhr, status, error);
+
                     }
                 });
             });

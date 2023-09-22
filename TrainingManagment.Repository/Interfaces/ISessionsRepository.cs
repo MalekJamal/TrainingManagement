@@ -12,6 +12,7 @@ namespace TrainingManagment.Repository.Interfaces
         int NumberOfAcceptedTrainees(string Year);
         bool IsYearExist(string year);
         List<Session> FindByYear(string year);
+        Session GetSession();
 
     }
 }

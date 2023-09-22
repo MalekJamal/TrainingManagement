@@ -117,6 +117,10 @@ namespace TrainingManagment.Presentation.Controllers
                 TrainingTypeId = viewModel.TrainingTypeId,
                 TrainingStatusId = viewModel.TrainingStatusId,
                 TrainerNameId = viewModel.TrainerNameId,
+                TrainingStatus = viewModel.TrainingStatus,
+                TrainingResult = viewModel.TrainingResult,
+                TrainingTopic = viewModel.TrainingTopic,
+                TrainingType = viewModel.TrainingType,
 
             };
         }
@@ -133,9 +137,6 @@ namespace TrainingManagment.Presentation.Controllers
 
                 }
 
-                //SessionViewModel session2   = new SessionViewModel();
-                //session2 = MapSessionToViewModel(session.FirstOrDefault());
-                /////
                 SearchSessionViewModel sessionSearchViewModel = new SearchSessionViewModel();
 
                 List<SessionViewModel> sessionsViewModel = new List<SessionViewModel>();
@@ -165,12 +166,55 @@ namespace TrainingManagment.Presentation.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Invalid session ID");
+            }
 
+            Session sessionForDelete = await _unitOfWork.Sessions.GetByIdAsync(id);
+
+            if (sessionForDelete == null)
+            {
+                return NotFound(); // Session not found
+            }
+            SessionViewModel viewModel = await MapSessionToViewModelWithAll(sessionForDelete);
+
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Invalid session ID");
+            }
+            if (id > 0)
+            {
+                Session sessionForDelete = await _unitOfWork.Sessions.GetByIdAsync(id);
+
+                if (sessionForDelete == null)
+                {
+                    return NotFound(); // Session not found
+                }
+
+                sessionForDelete.IsActive = false;
+                sessionForDelete.IsDeleted = true;
+                _unitOfWork.Sessions.Update(sessionForDelete);
+                await _unitOfWork.Complete();
+
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var session = await _unitOfWork.Sessions.FindAsync(s => s.SessionId == id, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus" });
+            var session = await _unitOfWork.Sessions.FindAsync(s => s.SessionId == id, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus", "TrainingResult" });
 
             if (session == null)
             {
@@ -180,46 +224,63 @@ namespace TrainingManagment.Presentation.Controllers
             return View(session);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
-            return View();
+
+            Session s = _unitOfWork.Sessions.GetSession();
+
+            SessionViewModel sessionView = MapSessionToViewModel(s);
+            sessionView.Year = string.Empty;
+            return View(sessionView);
         }
+
+
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] List<Session> newSessionData)
+        public async Task<IActionResult> Create([FromBody] List<SessionViewModel> newSessionData)
         {
 
+            List<Session> AddedSessions = new List<Session>();
             try
             {
-                foreach (var item in newSessionData)
+                if (newSessionData != null)
+                {
+                    foreach (SessionViewModel viewModel in newSessionData)
+                    {
+                        AddedSessions.Add(MapViewModelToSession(viewModel));
+                    }
+                }
+
+                foreach (var item in AddedSessions)
                 {
                     if (item != null)
                     {
-                        item.CreatedBy = User.Identity.Name;
-                        item.CreatedOn = DateTime.Now;
-                        item.IsActive = true;
-                        item.IsDeleted = false;
-                        item.Year = "2024";
-
+                        item.CreatedBy = this.User.Identity.Name;
+                        item.TrainingStatusId = 11;
+                        item.TrainingResultId = 15;
                         await _unitOfWork.Sessions.AddAsync(item);
                     }
-
 
                 }
                 await _unitOfWork.Complete();
 
-
                 return Json(new { message = "Session data inserted successfully." });
+                // return RedirectToAction("Index");
+
             }
             catch (Exception ex)
             {
                 return Json(new { error = ex.Message });
             }
+
         }
+
+
         [HttpGet]
         public async Task<IActionResult> Search(SearchSessionViewModel session)
         {
             // Start with an initial query to get all active and non-deleted sessions
-            var query = await _unitOfWork.Sessions.FindAllAsync(s => s.IsActive == true && s.IsDeleted == false, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus" });
+            var query = await _unitOfWork.Sessions.FindAllAsync(s => s.IsActive == true && s.IsDeleted == false, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus", "TrainingResult" });
 
             // Build the query dynamically based on search criteria
             if (session.Year != null)
@@ -241,29 +302,28 @@ namespace TrainingManagment.Presentation.Controllers
             {
                 query = query.Where(s => s.TraineeName.Contains(session.TraineeName));
             }
-            //var space = session.StartDate?.Date.ToString().IndexOf(' ');
-            //var sd = session.StartDate?.Date.ToString().Substring(0, space);
-            //if (sd != null)
-            //{
-            //    query = query.Where(s => s.StartDate.Date.ToString().Substring(0, space) == sd);
-            //}
+            
 
-            //space = session.EndDate.Date.ToString().IndexOf(' ');
-            //var ed = session.StartDate.Date.ToString().Substring(0, space);
-            //if (sd != null)
-            //{
-            //    query = query.Where(s => s.ExpectedEndDate.Date.ToString().Substring(0, space) == ed);
-            //}
+            if (session.StartDate != null)
+            {
+                query = query.Where(s => s.StartDate == session.StartDate);
+            }
 
-            //if (session.Status != null)
-            //{
-            //    query = query.Where(s => s.TrainingStatus.NameEn == session.Status);
-            //}
 
-            //if (session.Result != null)
-            //{
-            //    query = query.Where(s => s.TrainingResult.NameEn == session.Result);
-            //}
+            if (session.EndDate != null)
+            {
+                query = query.Where(s => s.ExpectedEndDate == session.EndDate);
+            }
+
+            if (session.Status != null)
+            {
+                query = query.Where(s => s.TrainingStatus.NameEn == session.Status);
+            }
+
+            if (session.Result != null)
+            {
+                query = query.Where(s => s.TrainingResult.NameEn == session.Result);
+            }
 
             // Execute the final query and retrieve the results
             var filteredSessions = query.ToList();
@@ -277,105 +337,7 @@ namespace TrainingManagment.Presentation.Controllers
             return View(viewModel);
         }
 
-
-
-
-        public List<Session> FindByYear(string year)
-        {
-            return _unitOfWork.Sessions.FindByYear(year);
-        }
         [HttpGet]
-        public async Task<IActionResult> Update(string Year)
-        {
-
-            IEnumerable<Session> session = await _unitOfWork.Sessions.FindAllAsync(s => s.IsActive == true && s.IsDeleted == false && s.Year == Year, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus" });
-
-            if (session == null)
-            {
-                return NotFound();
-
-            }
-
-            SessionViewModel sessionViewModel = new SessionViewModel();
-
-            List<SessionViewModel> sessionsViewModel = new List<SessionViewModel>();
-
-            foreach (Session session1 in session)
-            {
-                sessionsViewModel.Add(MapSessionToViewModel(session1));
-            }
-
-            ViewBag.SessionsViewModel = sessionsViewModel;
-            ViewBag.Types = _unitOfWork.Lookups.GetAllTypes().ToList();
-            ViewBag.Topics = _unitOfWork.Lookups.GetAllTopics().ToList();
-            ViewBag.Trainers = _unitOfWork.Lookups.GetAllTrainer().ToList();
-            ViewBag.Status = _unitOfWork.Lookups.GetAllStatus().ToList();
-            ViewBag.Years = _unitOfWork.Lookups.GetAllYear().ToList();
-            ViewBag.Results = _unitOfWork.Lookups.GetAllResults().ToList();
-
-            return View(sessionViewModel);
-
-        }
-
-
-
-        [HttpPost]
-        public IActionResult Update([FromBody] List<Session> newSessionData)
-        {
-            try
-            {
-                foreach (var item in newSessionData)
-                {
-                    if (item != null)
-                    {
-                        item.CreatedBy = "dc9a8b7d-2014-445b-b63f-6d0ff68da9d7";
-                        item.CreatedOn = DateTime.Now;
-                        item.IsActive = true;
-                        item.IsDeleted = false;
-                        item.Year = "2023";
-
-
-
-                        _unitOfWork.Sessions.AddAsync(item);
-                    }
-
-
-                }
-                _unitOfWork.Complete();
-
-
-                return Json(new { message = "Session data inserted successfully." });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { error = ex.Message });
-            }
-        }
-
-
-        [HttpGet]
-        public async Task<IActionResult> GetSessions()
-        {
-            try
-            {
-                var sessions = await _unitOfWork.Sessions.GetAllAsync();
-
-                if (sessions == null)
-                {
-                    return NotFound();
-
-                }
-              
-                return Json(sessions);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while retrieving sessions.");
-                return View();
-            }
-        }
-
-
         public async Task<IActionResult> UpdateSession(int Id)
         {
             var session = await _unitOfWork.Sessions.FindAsync(s => s.SessionId == Id, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus" });
@@ -401,6 +363,74 @@ namespace TrainingManagment.Presentation.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Update(string Year)
+        {
+
+            IEnumerable<Session> session = await _unitOfWork.Sessions.FindAllAsync(s => s.IsActive == true && s.IsDeleted == false && s.Year == Year, new[] { "TrainerName", "TrainingType", "TrainingTopic", "TrainingStatus" });
+
+            if (session == null)
+            {
+                return NotFound();
+
+            }
+
+            SessionViewModel sessionViewModel = new SessionViewModel();
+
+            List<SessionViewModel> sessionsViewModel = new List<SessionViewModel>();
+
+            foreach (Session session1 in session)
+            {
+                sessionsViewModel.Add(MapSessionToViewModel(session1));
+            }
+
+            // when refactor the code, need to be use the getSession Method to populate the list in the view
+            ViewBag.SessionsViewModel = sessionsViewModel;
+            ViewBag.Types = _unitOfWork.Lookups.GetAllTypes().ToList();
+            ViewBag.Topics = _unitOfWork.Lookups.GetAllTopics().ToList();
+            ViewBag.Trainers = _unitOfWork.Lookups.GetAllTrainer().ToList();
+            ViewBag.Status = _unitOfWork.Lookups.GetAllStatus().ToList();
+            ViewBag.Years = _unitOfWork.Lookups.GetAllYear().ToList();
+            ViewBag.Results = _unitOfWork.Lookups.GetAllResults().ToList();
+
+            return View(sessionViewModel);
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Update([FromBody] List<Session> newSessionData)
+        {
+            try
+            {
+                foreach (var item in newSessionData)
+                {
+                    if (item != null)
+                    {
+                        item.CreatedBy = User.Identity.Name;
+                        item.CreatedOn = DateTime.Now;
+                        item.IsActive = true;
+                        item.IsDeleted = false;
+                        item.Year = DateTime.Now.Year.ToString();
+                        _unitOfWork.Sessions.Update(item);
+                    }
+
+
+                }
+               await _unitOfWork.Complete();
+
+
+                return Json(new { message = "Session data inserted successfully." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex });
+            }
+        }
+
+
 
     }
 }

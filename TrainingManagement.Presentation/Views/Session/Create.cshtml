@@ -1,15 +1,14 @@
-﻿@using TrainingManagment.Domain.Models.Enums;
-@using TrainingManagment.Repository.Repositories;
-@model Session
+﻿@model SessionViewModel
+
+@{
+    ViewData["Title"] = "Session Management";
+}
 
 
-@inject LookupRepository lookup;
- 
+    <form id="session-entry-form">
 
-
-    <form id="session-entry-form" class="m-4">
-
-        <div class="border p-3 mt-4">
+        <div class="border p-4 mt-4">
+            <!-- Increased padding -->
             <div class="row pb-2">
                 <h2 class="text-primary">
                     Create Session
@@ -17,77 +16,87 @@
                 <hr />
             </div>
             <div class="row">
-
-                <div class="mb-6">
-                    <label for="Year">Year:</label>
-                    <select asp-for="Year" id="year" name="selectedCode" onchange="disableSelect(this);">
-                        <option value="">Select Year</option>
-                        @foreach (var item in lookup.GetAllYear())
-                        {
-                            <option value="@item.NameEn">@item.NameEn</option>
+                <div class="col-md-6 mb-4">
+                    <!-- Added margin -->
+                    <div class="mb-3">
+                        <label for="Year">Year:</label>
+                        <select asp-for="Year" id="year" name="selectedCode" onchange="disableSelect(this);" class="form-control">
+                            <option value="">Select Year</option>
+                            @foreach (var item in Model.YearsList)
+                            {
+                                <option value="@item.NameEn">@item.NameEn</option>
+                            }
+                        </select>
+                    </div>
+                    <script>
+                        function disableSelect(select) {
+                            select.disabled = true;
                         }
-                    </select>
-                </div>
-
-                <script>
-                    function disableSelect(select) {
-                        select.disabled = true;
-                    }
-                </script>
-                       
-                    <br />
-                    <hr />
-                <div class="col-md-6">
+                    </script>
 
                     <div class="mb-3">
                         <input type="hidden" id="edit-id" value="-1">
                         <label for="traineeName">Trainee Name:</label>
-                        <input type="text" id="traineeName" name="traineeName" required>
+                        <input type="text" id="traineeName" name="traineeName" required class="form-control">
                     </div>
                     <div class="mb-3">
                         <label for="trainerName">Trainer Name:</label>
-                        <select asp-for="TrainerName" id="trainerName" name="selectedCode">
+                        <select asp-for="TrainerName" id="trainerName" name="selectedCode" class="form-control">
                             <option value="">Select Trainer</option>
-                            @foreach (var item in lookup.GetAllTrainer())
+                            @foreach (var item in Model.TrainersList)
                             {
-                                <option value="@item.Id">@item.NameEn</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="topic">Training Topic:</label>
-                        <select asp-for="TrainingTopic" id="topic" name="selectedCode">
-                            <option value="">Select Topic</option>
-                            @foreach (var item in lookup.GetAllTopics())
-                            {
-                                <option value="@item.Id" data-topic-name="@item.NameEn">@item.NameEn</option>
+                                @if (item.IsDeleted != true)
+                                {
+                                    <option value="@item.Id">@item.NameEn</option>
+                                }
                             }
                         </select>
                     </div>
                 </div>
-                <div class="col-md-6">
+
+                <div class="col-md-6 mb-4">
                     <div class="mb-3 form-select">
                         <label for="type">Training Type:</label>
-                        <select asp-for="TrainingType" id="type" name="selectedCode">
+                        <select asp-for="TrainingType" id="type" name="selectedCode" class="form-control">
                             <option value="">Select Type</option>
-                            @foreach (var item in lookup.GetAllTypes())
+                            @foreach (var item in Model.TypesList)
                             {
-                                <option value="@item.Id">@item.NameEn</option>
+                                @if (item.IsDeleted != true)
+                                {
+                                    <option value="@item.Id">@item.NameEn</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3 form-select">
+                        <label for="type">Training Topic:</label>
+                        <select asp-for="TrainingTopic" id="topic" name="selectedCode" class="form-control">
+                            <option value="">Select Topic</option>
+                            @foreach (var item in Model.TopicsList)
+                            {
+                                @if (item.IsDeleted != true)
+                                {
+                                    <option value="@item.Id">@item.NameEn</option>
+                                }
                             }
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate"  min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                        <input type="date" id="startDate" name="startDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
                     </div>
                     <div class="mb-3">
                         <label for="endDate">End Date:</label>
                         <input type="date" id="endDate" name="endDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" required>
                     </div>
                 </div>
-                <div class="col text-center">
-                    <button type="button" id="preview-button" class="btn btn-outline-secondary">Add</button>
-                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col text-center">
+                <button type="button" id="preview-button" class="btn btn-outline-secondary"><i class="bi bi-person-plus-fill"></i> Add</button>
             </div>
         </div>
     </form>
@@ -106,30 +115,20 @@
             </tr>
         </thead>
         <tbody>
- 
         </tbody>
     </table>
     <div class="col text-center">
         <button type="button" id="insert-button" class="btn btn-primary">Save</button>
-        <button type="button" id="" class="btn btn-secondery">Close</button>
-
+        <a asp-controller="Session" asp-action="Index" class="btn btn-dark">Back to List</a>
     </div>
 
 
 
-
-
-
-
-
-
-
 @section Scripts{
-
+    @{
     <script type="text/javascript">
         $(document).ready(function () {
             var editingRow = null;
-
 
             function areInputFieldsEmpty() {
                 return (
@@ -142,23 +141,24 @@
                 );
             }
 
-
             function getSelectedTopicName(selectedValue) {
                 var selectedOption = $("#topic option[value='" + selectedValue + "']");
                 return selectedOption.data("topic-name") || "Unknown";
             }
 
-
-            var selectedValue = $("#topic").val(); 
-
+            var selectedValue = $("#topic").val();
             var selectedTopicName = getSelectedTopicName(selectedValue);
 
-            $("#preview-button").click(function () {
-                if (areInputFieldsEmpty()) {
-                    alert("Please fill in all fields before adding a row.");
-                    return;
-                }
-
+                $("#preview-button").click(function () {
+                    if (areInputFieldsEmpty()) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Please fill in all fields before adding a row.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        return;
+                    }
 
                 var traineeName = $("#traineeName").val();
                 var selectedTrainer = $("#trainerName option:selected");
@@ -167,7 +167,6 @@
                 var startDate = $("#startDate").val();
                 var endDate = $("#endDate").val();
                 var editId = $("#edit-id").val();
-
 
                 var trainer = {
                     Id: selectedTrainer.val(),
@@ -194,8 +193,8 @@
                         '<td>' + startDate + '</td>' +
                         '<td>' + endDate + '</td>' +
                         '<td>' +
-                        '<button class="edit-row-button">Edit</button> ' +
-                        '<button class="delete-row-button">Delete</button>' +
+                        '<button class="edit-row-button"><i class="bi bi-pencil"></i></button> ' +
+                        '<button class="delete-row-button"><i class="bi bi-trash"></i></button>' +
                         '</td>' +
                         '</tr>';
                     $("#session-table tbody").append(newRow);
@@ -209,7 +208,7 @@
                     $(editingRow).find("td:eq(4)").text(startDate);
                     $(editingRow).find("td:eq(5)").text(endDate);
                     $("#edit-id").val("-1");
-                    $(editingRow).find(".edit-row-button").text("Edit");
+                    $(editingRow).find(".edit-row-button").html('<i class="bi bi-pencil"></i>');
                 }
 
                 // Clear form
@@ -220,6 +219,7 @@
                 $("#startDate").val('');
                 $("#endDate").val('');
             });
+
             // Delete row
             $("#session-table").on("click", ".delete-row-button", function () {
                 $(this).closest("tr").remove();
@@ -243,7 +243,7 @@
                 $("#startDate").val(startDate);
                 $("#endDate").val(endDate);
                 $("#edit-id").val($(editingRow).index());
-                $(this).text("Save");
+                $(this).html('<i class="bi bi-save"></i>');
             });
 
             // Insert session data
@@ -252,7 +252,6 @@
                 $("#session-table tbody tr").each(function () {
                     var traineeName = $(this).find("td:eq(0)").text();
                     var trainerName = $(this).find("td:eq(1)").data("trainer-id");
- 
                     var topicId = $(this).find("td:eq(2)").data("topic-id");
                     var typeId = $(this).find("td:eq(3)").data("type-id");
                     var startDate = $(this).find("td:eq(4)").text();
@@ -266,117 +265,55 @@
                         TrainingTypeId: typeId,
                         StartDate: startDate,
                         ExpectedEndDate: endDate,
-                        Year:year
-
-                     });
+                        Year: year
+                    });
                 });
-                //ValueKind = Object : "{"TraineeName":"ahmad","TrainerName":"Zakaria Lafi","TrainingTopicId":3,"TrainingTypeId":1,"StartDate":"2023-09-06","EndDate":"2023-09-13"}"
-                // Send session via AJAX
-                $.ajax({
-                    url: "/Session/Create",
-                    method: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify(sessionData),
-                    success: function (response) {
-                        alert(response.message);
 
-                        $("#session-table tbody").empty();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr, status, error);
+                    // Check if there is data to insert
+                    if (sessionData.length === 0) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'No session data added.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        return;
                     }
-                });
+
+                // Send session via AJAX
+                    $.ajax({
+                        url: "/Session/Create",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(sessionData),
+                        success: function (response) {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href = "/Session/Index";
+                                $("#session-table tbody").empty();
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while processing your request.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                console.error(xhr, status, error);
+                            });
+                        }
+                    });
+
             });
         });
     </script>
-
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
+    
+                    
+  <partial name="_ValidationScriptsPartial" />
+                    }
 }
-
-
-@*<form method="post">
-    <div class="border p-3 mt-4">
-        <div class="row pb-2">
-            <h2 class="text-primary">
-                Create Session
-            </h2>
-            <hr />
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label asp-for="Year"></label>
-                    @Html.DropDownListFor(model =>
-                    model.Year, new SelectList(Enum.GetValues(typeof(LookupEnum.Year))), new { @class = "form-control" })
-                    <span asp-validation-for="Year" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label asp-for="TraineeName"></label>
-                    <input asp-for="TraineeName" class="form-control" />
-                    <span asp-validation-for="TraineeName" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="TrainerName"></label>
-                    @Html.DropDownListFor(model => 
-                        model.TrainerName, new SelectList(Enum.GetValues(typeof(LookupEnum.Trainer))), new { @class = "form-control" })
-                    <span asp-validation-for="TrainerName" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="TrainingTopic"></label>
-                    @Html.DropDownListFor(model => 
-                        model.TrainingTopic, new SelectList(Enum.GetValues(typeof(LookupEnum.TrainingTopics))), new { @class = "form-control" })
-                    <span asp-validation-for="TrainingTopic" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3 form-select">
-                    <label asp-for="TrainingType"></label>
-                    @Html.DropDownListFor(model => 
-                        model.TrainingType, new SelectList(Enum.GetValues(typeof(LookupEnum.enTrainingType))), new { @class = "form-control" })
-                    <span asp-validation-for="TrainingType" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="StartDate"></label>
-                    <input asp-for="StartDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                    <span asp-validation-for="StartDate" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="ExpectedEndDate"></label>
-                    <input asp-for="ExpectedEndDate" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                    <span asp-validation-for="ExpectedEndDate" class="text-danger"></span>
-                </div>
-            </div>
-                            @*Should be Moved
-            <input asp-for="CreatedBy" type="hidden" class="form-control" value="Malek" />
-            <input asp-for="ModifyBy" type="hidden" class="form-control" value="Malek" />
-            <input asp-for="CreatedOn" type="hidden" class="form-control" value="@DateTime.Now" />
-            <input asp-for="ModifyOn" type="hidden" class="form-control" value="@DateTime.Now" />
-            <input asp-for="IsActive" type="hidden" class="form-control" value="@true" />
-            <input asp-for="IsDeleted" type="hidden" class="form-control" value="@false" />
-            <input asp-for="ActualEndDate" type="hidden" class="form-control" value="@DateTime.Now" />
-            <input asp-for="Status" type="hidden" class="form-control" value="@LookupEnum.Status.Active" />
-            <input asp-for="Result" type="hidden" class="form-control" value="@LookupEnum.Result.On_Hold" />
-
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-primary" style="width: 150px;">Add</button>
-                <a asp-controller="Session" asp-action="Index" class="btn btn-secondary" style="width: 150px;">Back To List</a>
-            </div>
-        </div>
-    </div>
-</form>
-
-
-<table class="table table-striped">
-    <tr>
-
-    </tr>
-</table>*@

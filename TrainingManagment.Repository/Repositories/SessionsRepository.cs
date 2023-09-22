@@ -58,5 +58,13 @@ namespace TrainingManagment.Repository.Repositories
 
             return (sessions);
         }
+
+        public Session GetSession()
+        {
+            Session session = _context.Session.Where(s => s.IsActive == true).FirstOrDefault();
+
+
+            return session;
+        }
     }
 }
