@@ -1,42 +1,41 @@
-﻿@model IEnumerable<Session>
+﻿@model SearchSessionViewModel
+
 
 <h1>Training Sessions</h1>
 
+
+
 <div class="container align-items-center border border-dark border-2">
-    <form id="searchForm" method="get" asp-action="Search" class="m-2">
+    <form id="searchForm" method="get" asp-controller="Session" asp-action="Search" class="m-2">
         <div class="row ">
             <div class="col">
                 <div class="mb-3 w-50">
                     <label for="Year" class="form-inline">Year</label>
-                    @{
-                        var yearValues = Enum.GetValues(typeof(LookupEnum.Year))
-                        .Cast<LookupEnum.Year>()
-                        .Select(y => y.ToString());
-                    }
-                    <select name="Year" class="form-control">
-                        <option>choose a year</option>
-                        @foreach (var year in yearValues)
+
+                    <select id="Year" asp-for="Year" name="Year" class="form-control">
+                        <option value="">choose a year</option>
+                        @foreach (var year in ViewBag.Years)
                         {
-                            <option value="@year">@year</option>
+                            <option value="@year.NameEn">@year.NameEn</option>
                         }
                     </select>
-                    <span class="text-danger"></span>
+
+                    <span asp-validation-for="Year" class="text-danger"></span>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3 w-50">
-                    <label for="TrainingType">Training Type</label>
-                    @{
-                        var trainingTypeValues = Enum.GetValues(typeof(LookupEnum.enTrainingType))
-                        .Cast<LookupEnum.enTrainingType>()
-                        .Select(tt => tt.ToString()); // Replace underscore with space .Replace("_", " ")
-                    }
-                    <select name="TrainingType" class="form-control">
-                        <option>choose training type</option>
+                    <label asp-for="Type">Training Type</label>
 
-                        @foreach (var trainingType in trainingTypeValues)
+                    <select id="Type" asp-for="Type" name="Type" class="form-control">
+                        <option value="">choose training type</option>
+
+                        @foreach (var trainingType in ViewBag.Types)
                         {
-                            <option value="@trainingType">@trainingType</option>
+                            @if (trainingType.IsDeleted != true)
+                            {
+                               <option value="@trainingType.NameEn">@trainingType.NameEn</option>
+                            }
                         }
                     </select>
                     <span class="text-danger"></span>
@@ -47,17 +46,16 @@
             <div class="col">
                 <div class="mb-3 w-50">
                     <label for="TrainerName">Trainer Name</label>
-                    @{
-                        var trainerValues = Enum.GetValues(typeof(LookupEnum.Trainer))
-                        .Cast<LookupEnum.Trainer>()
-                        .Select(t => t.ToString()); // Replace underscore with space .Replace("_", " ")
-                    }
-                    <select name="TrainerName" class="form-control">
-                        <option>choose trainer name</option>
 
-                        @foreach (var trainer in trainerValues)
+                    <select id="TrainerName" asp-for="TrainerName" name="TrainerName" class="form-control">
+                        <option value="">choose trainer name</option>
+
+                        @foreach (var trainer in ViewBag.Trainers)
                         {
-                            <option value="@trainer">@trainer</option>
+                            @if (trainer.IsDeleted != true)
+                            {
+                                 <option value="@trainer.NameEn">@trainer.NameEn</option>
+                            }
                         }
                     </select>
                     <span class="text-danger"></span>
@@ -65,8 +63,8 @@
             </div>
             <div class="col">
                 <div class="mb-3 w-50">
-                    <label for="TraineeName">Trainee Name</label>
-                    <input name="TraineeName" class="form-control" />
+                    <label asp-for="TraineeName">Trainee Name</label>
+                    <input id="TraineeName" asp-for="TraineeName" name="TraineeName" class="form-control" />
                     <span class="text-danger"></span>
                 </div>
             </div>
@@ -75,17 +73,13 @@
             <div class="col">
                 <div class="mb-3 w-50">
                     <label for="Status">Status</label>
-                    @{
-                        var status = Enum.GetValues(typeof(LookupEnum.Status))
-                        .Cast<LookupEnum.Status>()
-                        .Select(t => t.ToString()); // Replace underscore with space .Replace("_", " ")
-                    }
-                    <select name="Status" class="form-control">
-                        <option>choose status</option>
 
-                        @foreach (var st in status)
+                    <select id="Status" asp-for="Status" name="Status" class="form-control">
+                        <option value="">choose status</option>
+
+                        @foreach (var st in ViewBag.Status)
                         {
-                            <option value="@st">@st</option>
+                            <option value="@st.NameEn">@st.NameEn</option>
                         }
                     </select>
                     <span class="text-danger"></span>
@@ -94,113 +88,116 @@
             <div class="col">
                 <div class="mb-3 w-50">
                     <label for="Result">Result</label>
-                    @{
-                        var result = Enum.GetValues(typeof(LookupEnum.Result))
-                        .Cast<LookupEnum.Result>()
-                        .Select(t => t.ToString()); // Replace underscore with space .Replace("_", " ")
-                    }
-                    <select name="Result" class="form-control">
-                        <option>choose result</option>
 
-                        @foreach (var res in result)
+                    <select id="Result" asp-for="Result" name="Result" class="form-control">
+                        <option value="">choose result</option>
+
+                        @foreach (var result in ViewBag.Results)
                         {
-                            <option value="@res">@res</option>
+                            <option value="@result.NameEn">@result.NameEn</option>
                         }
                     </select>
                     <span class="text-danger"></span>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col">
                 <div class="mb-3 w-50">
-                    <label for="StartDate">Start Date</label>
-                    <input name="StartDate" class="form-control" type="date" />
-                    <span class="text-danger"></span>
+                    <label asp-for="StartDate">Start Date</label>
+                    <input id="StartDate" asp-for="StartDate" name="StartDate" class="form-control" type="date" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3 w-50">
                     <label for="ExpectedEndDate">Expected End Date</label>
-                    <input name="ExpectedEndDate" class="form-control" type="date" />
-                    <span class="text-danger"></span>
+                    <input id="EndDate" asp-for="EndDate" name="EndDate" class="form-control" type="date" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
                 </div>
             </div>
         </div>
-    <div class="row">
+        <div class="row">
             <div class="col text-center">
-            <button type="submit" class="btn btn-dark w-25 m-4">Search</button>
+                <button type="submit" class="btn btn-dark w-25 m-4">Search</button>
+            </div>
         </div>
-    </div>
     </form>
 </div>
+
 
 <div class="row">
     <div>
         <a asp-action="Create" class="btn btn-dark m-4">Create New Session</a>
-        <a asp-action="UpdateCurrent" asp-route-year="@DateTime.Now.Year" class="btn btn-dark m-4">Update Current Session</a>
+        <a asp-action="Update" asp-route-year="@DateTime.Now.Year" class="btn btn-dark m-4">Update Current Session</a>
     </div>
 </div>
 
 
 <style>
     table {
-        border-collapse: collapse; /* Collapse borders to avoid double borders */
-        width: 100%;
+        border-collapse: collapse;
+        / Collapse borders to avoid double borders / width: 100%;
     }
 
     th, td {
-        border: 1px solid #ddd; /* Add a 1px solid border to all table cells */
-        padding: 8px; /* Add padding for better spacing */
-        text-align: left; /* Align text to the left */
+        border: 1px solid #ddd;
+        / Add a 1px solid border to all table cells / padding: 8px;
+        / Add padding for better spacing / text-align: left;
+        / Align text to the left /
     }
 
     th {
-        background-color: #f2f2f2; /* Add background color to table headers */
+        background-color: #f2f2f2;
+        / Add background color to table headers /
     }
-</style>
 
-<table class="table table-bordered mt-4">
-    <thead>
+</style>
+@{
+    List<SessionViewModel> sessionsViewModel = ViewBag.SessionsViewModel as List<SessionViewModel>;
+}
+
+<table id="session-table" class="table table-bordered mt-4">
+   @* <thead>
         <tr>
             <th>Year</th>
             <th>Trainee Name</th>
             <th>Trainer Name</th>
-            <th>Training Topic</th>
             <th>Training Type</th>
             <th>Start Date</th>
             <th>Expected End Date</th>
             <th>Status</th>
             <th></th>
         </tr>
-    </thead>
+    </thead>*@
     <tbody>
         @if (Model != null)
         {
-            @foreach (var session in Model)
+            @foreach (var session in sessionsViewModel)
             {
                 <tr>
                     <td>@session.Year</td>
                     <td>@session.TraineeName</td>
-                    <td>@session.TrainerNameId</td>
-                    <td>@session.TrainingTopicId</td>
-                    <td>@session.TrainingTypeId</td>
+                    <td>@session.TrainerName.NameEn</td>
+                    <td>@session.TrainingType.NameEn</td>
                     <td>@session.StartDate.ToString("yyyy-MM-dd")</td>
                     <td>@session.ExpectedEndDate.ToString("yyyy-MM-dd")</td>
-                    
+                    <td>@session.TrainingStatus.NameEn</td>
+
                     <td>
                         <div class="w-60 btn-group d-inline mr-2" role="group">
                             <a asp-controller="Session" asp-action="Details" class="mx-2 text-decoration-none"
                                asp-route-id="@session.SessionId">
                                 <i class="bi bi-eye-fill text-black-50"></i>
                             </a>
-                            <a asp-controller="Session" asp-action="Update" class="mx-2 text-decoration-none"
+                            <a asp-controller="Session" asp-action="UpdateSession" class="mx-2 text-decoration-none"
                                asp-route-id="@session.SessionId">
                                 <i class="bi bi-pencil-fill text-black-50"></i>
                             </a>
 
-                            <a asp-controller="Session" asp-action="Delete" class="mx-2 text-decoration-none"
-                               asp-route-id="@session.SessionId">
+                            <a js-delete href="javascript:;" data-id="@session.SessionId" class="mx-2 text-decoration-none js-delete"
+                               >
                                 <i class="bi bi-trash text-black-50"></i>
                             </a>
 
@@ -215,6 +212,109 @@
 
 
 @section Scripts{
+
+    <script type="text/javascript">
+        var dataTable; // Declare the DataTable variable globally
+
+        $(document).ready(function () {
+
+
+
+            $("#searchForm").submit(function (e) {
+                e.preventDefault(); // Prevent the form from submitting by default
+
+                // Check if at least one input field is filled
+                var inputs = $("#searchForm input[type='text'], #searchForm input[type='date'], #searchForm select");
+                var filled = false;
+
+                inputs.each(function () {
+                    if ($(this).val()) {
+                        filled = true;
+                        return false; // Exit the loop if a filled input is found
+                    }
+                });
+
+                if (filled) {
+                    // At least one input is filled, submit the form
+                    this.submit();
+                } else {
+                    // No input is filled, show SweetAlert
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please fill in at least one input field.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+
+
+            // Delete button
+            $('.js-delete').on('click', function () {
+                var btn = $(this);
+                bootbox.confirm({
+                    message: 'Are you sure that you want to delete this session?',
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-secondary'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: `/Session/DeleteConfirmed/?Id=${btn.data('id')}`,
+                                method: 'POST',
+                                success: function () {
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: 'The session was deleted successfully',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    });
+                                },
+                                error: function () {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'Something went wrong',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+
+            // Initialize DataTable after loading data
+            dataTable = $('#session-table').DataTable({
+                searching: false,
+                lengthMenu: [5, 8, 10],
+                pageLength: 5,
+                ordering: true,
+                responsive: true,
+                "columns": [
+                    { "title": "Year" },
+                    { "title": "Trainee Name" },
+                    { "title": "Trainer Name" },
+                    { "title": "Training Type" },
+                    { "title": "Start Date" },
+                    { "title": "Expected End Date" },
+                    { "title": "Status" },
+                    { "title": "Actions" },
+                ]
+            });
+        });
+    </script>
+
+
+
     @{
         <partial name="_ValidationScriptsPartial" />
     }

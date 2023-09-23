@@ -1,0 +1,114 @@
+﻿@model SessionViewModel
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Update Session</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <form id="session-entry-form" method="post" asp-action="UpdateSession">
+
+        <div class="row pb-2">
+            <h2 class="text-primary">
+                Update Session
+            </h2>
+            <hr />
+        </div>
+        <div class="row">
+            <br />
+            <hr />
+            <div class="col-md-6">
+                <input type="hidden" asp-for="Year" />
+                <input type="hidden" asp-for="SessionId" />
+
+
+                <div class="mb-3">
+                    <label asp-for="TraineeName">Trainee Name:</label>
+                    <input asp-for="TraineeName" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TrainerNameId">Trainer Name:</label>
+                    <select asp-for="TrainerNameId" class="form-control" asp-items="@(new SelectList(Model.TrainersList, "Id", "NameEn"))">
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TrainingTopicId">Training Topic:</label>
+                    <select asp-for="TrainingTopicId" class="form-control" asp-items="@(new SelectList(Model.TopicsList, "Id", "NameEn"))">
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TrainingTypeId">Training Types:</label>
+                    <select asp-for="TrainingTypeId" class="form-control" asp-items="@(new SelectList(Model.TypesList, "Id", "NameEn"))">
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TrainingStatusId">Training Status:</label>
+                    <select asp-for="TrainingStatusId" class="form-control" asp-items="@(new SelectList(Model.StatusList, "Id", "NameEn"))">
+                        <option value="">Select</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TrainingResultId">Training Result:</label>
+                    <select asp-for="TrainingResultId" class="form-control">
+                        <option value="">Select Result</option>
+                        @foreach (var item in Model.ResultsList)
+                        {
+                            <option value="@item.Id">@item.NameEn</option>
+                        }
+                    </select>
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="EvaluationScore">Evaluation Score:</label>
+                    <input asp-for="EvaluationScore" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="StartDate">Start Date:</label>
+                    <input asp-for="StartDate" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ExpectedEndDate">End Date:</label>
+                    <input asp-for="ExpectedEndDate" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="FinalPresentationDate"> Final Presentation Date:</label>
+                    <input asp-for="FinalPresentationDate" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ActualEndDate">Actual End Date:</label>
+                    <input asp-for="ActualEndDate" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Comment">Comment:</label>
+                    <textarea asp-for="Comment" rows="4" style="max-width: 100%; max-height: 200px; min-height:50px;" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+
+

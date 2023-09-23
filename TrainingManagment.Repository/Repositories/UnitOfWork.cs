@@ -14,6 +14,7 @@ namespace TrainingManagment.Repository.Repositories
         private readonly ApplicationDbContext _context;
         //public IBaseRepository<Session> Sessions { get; private set; }
         public ISessionsRepository Sessions { get; private set; }
+        public ILookupRepository Lookups { get; private set; }
         // add more interfaces
 
         public UnitOfWork(ApplicationDbContext context)
@@ -21,6 +22,7 @@ namespace TrainingManagment.Repository.Repositories
             _context = context;
             //Sessions = new BaseRepository<Session>(_context);
             Sessions = new SessionsRepository(_context);
+            Lookups = new LookupRepository(_context);
         }
 
 

@@ -22,7 +22,7 @@ namespace TrainingManagment.Domain.Models
         public DateTime ExpectedEndDate { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime ActualEndDate { get; set; }
+        public DateTime? ActualEndDate { get; set; }
 
         [Required]
         public string Year { get; set; }

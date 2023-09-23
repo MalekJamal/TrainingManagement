@@ -1,18 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using TrainingManagement.Domain.ViewModels;
 using TrainingManagment.Domain.Models;
+using TrainingManagment.Repository.Interfaces;
 using TrainingManagment.Repository.Repositories;
 
 namespace TrainingManagement.Presentation.Controllers
 {
     public class ListController : Controller
     {
-        private readonly LookupRepository _lookup;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ListController(LookupRepository lookup)
+        public ListController(IUnitOfWork unitOfWork)
         {
-            _lookup = lookup;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -32,5 +37,157 @@ namespace TrainingManagement.Presentation.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult AddType()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddType(AddLookupViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(Types));
+            }
+            var nameEnExist = await _unitOfWork.Lookups.FindAsync(lookup => lookup.NameEn == viewModel.NameEn);
+
+            if (nameEnExist != null)
+            {
+                ModelState.AddModelError("NameEn", $"{nameEnExist.NameEn} already exist");
+                return View(viewModel);
+            }
+
+            var nameArExist = await _unitOfWork.Lookups.FindAsync(lookup => viewModel.NameAr == lookup.NameAr);
+
+            if (nameArExist != null)
+            {
+                ModelState.AddModelError("NameAr", $"{nameArExist.NameAr} already exist");
+                return View(viewModel);
+            }
+
+            var type = new Lookup
+            {
+                CreatedBy = User.Identity.Name,
+                CreatedOn = DateTime.Now,
+                IsActive = true,
+                IsDeleted = false,
+                LookupCategoryId = viewModel.LookupCategoryId,
+                NameEn = viewModel.NameEn,
+                NameAr = viewModel.NameAr
+            };
+
+            var lookup = await _unitOfWork.Lookups.AddAsync(type);
+
+            await _unitOfWork.Complete();
+            return RedirectToAction(nameof(Types));
+        }
+
+
+        [HttpGet]
+        public IActionResult AddTopic()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddTopic(AddLookupViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(Topics));
+            }
+            var nameEnExist = await _unitOfWork.Lookups.FindAsync(lookup => lookup.NameEn == viewModel.NameEn);
+
+            if (nameEnExist != null)
+            {
+                ModelState.AddModelError("NameEn", $"{nameEnExist.NameEn} already exist");
+                return View(viewModel);
+            }
+
+            var nameArExist = await _unitOfWork.Lookups.FindAsync(lookup => viewModel.NameAr == lookup.NameAr);
+
+            if (nameArExist != null)
+            {
+                ModelState.AddModelError("NameAr", $"{nameArExist.NameAr} already exist");
+                return View(viewModel);
+            }
+
+            var type = new Lookup
+            {
+                CreatedBy = User.Identity.Name,
+                CreatedOn = DateTime.Now,
+                IsActive = true,
+                IsDeleted = false,
+                LookupCategoryId = viewModel.LookupCategoryId,
+                NameEn = viewModel.NameEn,
+                NameAr = viewModel.NameAr
+            };
+
+            var lookup = await _unitOfWork.Lookups.AddAsync(type);
+
+            await _unitOfWork.Complete();
+            return RedirectToAction(nameof(Topics));
+        }
+
+
+
+        [HttpGet]
+        public IActionResult AddTrainer()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddTrainer(AddLookupViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(Trainers));
+            }
+            var nameEnExist = await _unitOfWork.Lookups.FindAsync(lookup => lookup.NameEn == viewModel.NameEn);
+
+            if (nameEnExist != null)
+            {
+                ModelState.AddModelError("NameEn", $"{nameEnExist.NameEn} already exist");
+
+                return View(viewModel);
+            }
+
+            var nameArExist = await _unitOfWork.Lookups.FindAsync(lookup => viewModel.NameAr == lookup.NameAr);
+
+            if (nameArExist != null)
+            {
+                ModelState.AddModelError("NameAr", $"{nameArExist.NameAr} already exist");
+
+                return View(viewModel);
+            }
+
+            var type = new Lookup
+            {
+                CreatedBy = User.Identity.Name,
+                CreatedOn = DateTime.Now,
+                IsActive = true,
+                IsDeleted = false,
+                LookupCategoryId = viewModel.LookupCategoryId,
+                NameEn = viewModel.NameEn,
+                NameAr = viewModel.NameAr
+            };
+
+            var lookup = await _unitOfWork.Lookups.AddAsync(type);
+
+            await _unitOfWork.Complete();
+            return RedirectToAction(nameof(Trainers));
+        }
+
+
+
     }
 }

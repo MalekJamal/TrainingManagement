@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Session>
+﻿@model SearchSessionViewModel
 
 <style>
     table {
@@ -23,7 +23,6 @@
             <th>Year</th>
             <th>Trainee Name</th>
             <th>Trainer Name</th>
-            <th>Training Topic</th>
             <th>Training Type</th>
             <th>Start Date</th>
             <th>Expected End Date</th>
@@ -32,32 +31,40 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model != null)
+        @if (Model.Sessions == null || !Model.Sessions.Any())
         {
-            @foreach (var session in Model)
+            <tr>
+                <td colspan="8">
+                    <h3 class="text-body display-3 text-center">No Data Found!</h3>
+                </td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var session in Model.Sessions)
             {
                 <tr>
                     <td>@session.Year</td>
                     <td>@session.TraineeName</td>
-                    <td>@session.TrainerName</td>
-                    <td>@session.TrainingTopic</td>
-                    <td>@session.TrainingType</td>
+                    <td>@session.TrainerName.NameEn</td>
+                    <td>@session.TrainingType.NameEn</td>
                     <td>@session.StartDate.ToString("yyyy-MM-dd")</td>
                     <td>@session.ExpectedEndDate.ToString("yyyy-MM-dd")</td>
-                    
+                    <td>@(session.TrainingStatus?.NameEn ?? "_")</td>
+
                     <td>
                         <div class="w-60 btn-group d-inline mr-2" role="group">
                             <a asp-controller="Session" asp-action="Details" class="mx-2 text-decoration-none"
                                asp-route-id="@session.SessionId">
-                                <i class="bi bi-eye-fill text-black-50"></i>
+                                <i class="bi-eye-fill text-black-50"></i>
                             </a>
                             <a asp-controller="Session" asp-action="Edit" class="mx-2 text-decoration-none"
                                asp-route-id="@session.SessionId">
-                                <i class="bi bi-pencil-fill text-black-50"></i>
+                                <i class="bi-pencil-fill text-black-50"></i>
                             </a>
                             <a asp-controller="Session" asp-action="Delete" class="mx-2 text-decoration-none"
                                asp-route-id="@session.SessionId">
-                                <i class="bi bi-trash3 text-black-50"></i>
+                                <i class="bi-trash text-black-50"></i>
                             </a>
                         </div>
                     </td>
@@ -66,9 +73,11 @@
         }
     </tbody>
 </table>
+
 <div class="mt-3">
     <a asp-controller="Session" asp-action="Index" class="btn btn-dark">Back to List</a>
 </div>
+
 @section Scripts{
     @{
         <partial name="_ValidationScriptsPartial" />

@@ -6,6 +6,7 @@ using TrainingManagment.Domain.Models;
 using TrainingManagment.Repository.Data;
 using System.Linq;
 using TrainingManagment.Domain.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace TrainingManagment.Repository.Repositories
 {
@@ -47,7 +48,23 @@ namespace TrainingManagment.Repository.Repositories
 
         public List<Session> FindByYear(string year)
         {
-            return (_context.Session.Where(x => x.Year == year).ToList());
+            // this is a way to return the session with corresponding columns in lookup tables
+            var sessions = _context.Session
+                .Include(s => s.TrainerName)
+                .Include(s => s.TrainingType)
+                .Include(s => s.TrainingTopic)
+                .Include(s => s.TrainingStatus)
+                .ToList();
+
+            return (sessions);
+        }
+
+        public Session GetSession()
+        {
+            Session session = _context.Session.Where(s => s.IsActive == true).FirstOrDefault();
+
+
+            return session;
         }
     }
 }

@@ -84,7 +84,7 @@ namespace TrainingManagment.Repository.Repositories
         {
             try
             {
-                return await _context.Set<T>().SingleOrDefaultAsync(criteria);
+                return await _context.Set<T>().FirstOrDefaultAsync(criteria);
             }
             catch (Exception ex)
             {

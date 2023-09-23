@@ -7,10 +7,11 @@ using TrainingManagment.Domain.Models.Enums;
 using TrainingManagment.Domain.Models;
 using TrainingManagment.Repository.Data;
 using TrainingManagment.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace TrainingManagment.Repository.Repositories
 {
-    public class LookupRepository : BaseRepository<Lookup>, ILookup
+    public class LookupRepository : BaseRepository<Lookup>, ILookupRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -19,21 +20,21 @@ namespace TrainingManagment.Repository.Repositories
             _context = context;
         }
 
-        public List<string> GetAllResults()
+        public List<Lookup> GetAllResults()
         {
-            List<string> results = new List<string>();
+            List<Lookup> results = new List<Lookup>();
 
-            results = _context.Lookup.Where(x => x.LookupCategoryId == (int)LookupEnum.CategoryCode.Results).Select(x => x.NameEn).ToList();
+            results = _context.Lookup.Where(x => x.LookupCategoryId == (int)LookupEnum.CategoryCode.Results).ToList();
 
             return results;
         }
 
-        public List<string> GetAllStatus()
+        public List<Lookup> GetAllStatus()
 
         {
-            List<string> Status = new List<string>();
+            List<Lookup> Status = new List<Lookup>();
 
-            Status = _context.Lookup.Where(x => x.LookupCategoryId == (int)LookupEnum.CategoryCode.Status).Select(x => x.NameEn).ToList();
+            Status = _context.Lookup.Where(x => x.LookupCategoryId == (int)LookupEnum.CategoryCode.Status).ToList();
 
             return Status;
         }
