@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 using TrainingManagement.Domain.ViewModels;
@@ -13,12 +14,13 @@ using TrainingManagment.Domain.Models.Enums;
 using TrainingManagment.Presentation.Controllers;
 using TrainingManagment.Repository.Interfaces;
 using TrainingManagment.Repository.Repositories;
+using static TrainingManagment.Domain.Models.Enums.LookupEnum;
 
 namespace TrainingManagement.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class ListApiController : ControllerBase
     {
         private readonly ILogger<ListApiController> _logger;
@@ -33,80 +35,183 @@ namespace TrainingManagement.Presentation.Controllers
         [HttpGet("Topics")]
         public async Task<IActionResult> GetTopics()
         {
-            var types = await _unitOfWork.Lookups.FindAllAsync(b => b.IsActive == true && b.IsDeleted == false && b.LookupCategoryId == (int)LookupEnum.CategoryCode.Topics);
-            return Ok(types);
+            try
+            {
+                var types = await _unitOfWork.Lookups.FindAllAsync(b => b.IsActive == true && b.IsDeleted == false && b.LookupCategoryId == (int)LookupEnum.CategoryCode.Topics);
+
+                if (types != null && types.Any())
+                {
+                    return Ok(types);
+                }
+                else
+                {
+                    return StatusCode(500, new { message = "No topics found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
+
 
         [HttpGet("Types")]
         public async Task<IActionResult> GetTypes()
         {
-            var types = await _unitOfWork.Lookups.FindAllAsync(b => b.IsActive == true && b.IsDeleted == false && b.LookupCategoryId == (int)LookupEnum.CategoryCode.Type);
-            return Ok(types);
+            try
+            {
+                var types = await _unitOfWork.Lookups.FindAllAsync(b => b.IsActive == true && b.IsDeleted == false && b.LookupCategoryId == (int)LookupEnum.CategoryCode.Type);
+
+                if (types != null && types.Any())
+                {
+                    return Ok(types);
+                }
+                else
+                {
+                   return StatusCode(500, new { message = "No types found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
+
 
         [HttpGet("Trainers")]
         public async Task<IActionResult> GetTrainers()
         {
-            var trainers = await _unitOfWork.Lookups.FindAllAsync(b => b.IsActive == true && b.IsDeleted == false && b.LookupCategoryId == (int)LookupEnum.CategoryCode.TrainerName);
-            return Ok(trainers);
+            try
+            {
+                var trainers = await _unitOfWork.Lookups.FindAllAsync(b => b.IsActive == true && b.IsDeleted == false && b.LookupCategoryId == (int)LookupEnum.CategoryCode.TrainerName);
+
+                if (trainers != null && trainers.Any())
+                {
+                    return Ok(trainers);
+                }
+                else
+                {
+                    return StatusCode(500, new { message = "No trainers found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
+
 
         [HttpPost("DeleteItem")]
         public async Task<IActionResult> Delete(int id)
         {
-
-            if (id != 0)
+            try
             {
+                if (id == 0)
+                {
+                    return BadRequest("Item ID is required.");
+                }
+
                 var item = await _unitOfWork.Lookups.GetByIdAsync(id);
 
                 if (item == null)
                 {
-                    var message = "The item not found";
-                    return NotFound(message);
+
+                    return StatusCode(500, new { message = "Item not found." });
                 }
+
 
                 item.IsActive = false;
                 item.IsDeleted = true;
                 _unitOfWork.Lookups.Update(item);
                 await _unitOfWork.Complete();
 
+                
+                return Ok("Item deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+             
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("GetById")]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    return StatusCode(404, new { message = "Wrong Id" });
+                }
+
+                var item = await _unitOfWork.Lookups.GetByIdAsync(id);
+                if (item != null)
+                {
+                    return Ok(item);
+                }
+                return StatusCode(404, new { message = "Item not found." });
+
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
             }
 
-            return Ok();
         }
 
         [HttpPost("Edit")]
         public async Task<IActionResult> Edit(Lookup model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                var message = "The item not found";
-                return NotFound(message);
-            }
-
-            if (model.Id != 0)
-            {
-                var item = await _unitOfWork.Lookups.GetByIdAsync(model.Id);
-
-                if (item == null)
+                if (!ModelState.IsValid)
                 {
-                    var message = "The item not found";
-                    return NotFound(message);
+                    return StatusCode(404, new { message = "Item not found." });
                 }
-                var updated = new Lookup
+
+                if (model.Id != 0)
                 {
-                    NameEn = model.NameEn,
-                    NameAr = model.NameAr
-                };
+                    var item = await _unitOfWork.Lookups.GetByIdAsync(model.Id);
 
-                //item.IsActive = true;
-                //item.IsDeleted = false;
-                _unitOfWork.Lookups.Update(updated);
-                await _unitOfWork.Complete();
+                    if (item == null)
+                    {
+                        
+                        return StatusCode(404, new { message = "Item not found." });
+                    }
 
+                    if (item.NameEn == model.NameEn && item.NameAr == model.NameAr)
+                    {
+                        // StatusCode should be 304 not modified status code
+                        return StatusCode(200, new { message = "No changes made to the item." });
+                    }
+
+                    var duplicateItem = await _unitOfWork.Lookups
+                        .FindAsync(x => (x.NameEn == model.NameEn || x.NameAr == model.NameAr) && x.Id != model.Id);
+
+                    if (duplicateItem != null)
+                    {
+                        return StatusCode(409 , new { message = "An item with the same NameEn or NameAr already exists." });
+                    }
+
+                    item.NameEn = model.NameEn;
+                    item.NameAr = model.NameAr;
+                    item.ModifyBy = User.Identity.Name;
+                    item.ModifyOn = DateTime.Now;
+
+                    await _unitOfWork.Complete();
+
+                }
+
+                return Ok(new { message = "Item updated successfully." });
             }
+            catch (Exception ex)
+            {
 
-            return Ok();
+                return StatusCode(500, ex.Message);
+            }
+          
         }
 
 

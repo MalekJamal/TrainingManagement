@@ -29,6 +29,7 @@
                         <div class="mx-auto" style="width: 50%;">
                             <form id="addTopicForm" method="post">
                                 <div>
+                                    @*<input value="@Model.Id" id="id" type="hidden" />*@
                                     <div class="form-group">
                                         <label asp-for="NameEn"></label>
                                         <input asp-for="NameEn" id="nameEn" class="form-control" maxlength="100" required />
@@ -56,6 +57,44 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editTypeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editTypeModalLabel">Edit Type</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="mx-auto" style="width: 50%;">
+                            <form id="editTopicForm" method="post">
+                                <div>
+                                    <div class="form-group">
+                                        <label asp-for="NameEn"></label>
+                                        <input asp-for="NameEn" id="editNameEn" class="form-control" maxlength="100" required />
+                                        <span asp-validation-for="NameEn" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="NameAr"></label>
+                                        <input asp-for="NameAr" id="editNameAr" class="form-control" maxlength="100" required />
+                                        <span asp-validation-for="NameAr" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="editSubmitBtn" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="table-responsive">
     </div>
@@ -156,7 +195,7 @@
                     tableBody.empty();
 
                     $.each(data, function (i, item) {
-                        var editButton = '<button class="btn btn-warning btn-sm" onclick="editRow(' + item.id + ')">Edit</button>';
+                        var editButton = '<button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal" onclick="editRow(' + item.id + ')">Edit</button>';
                         var deleteButton = '<button class="btn btn-danger btn-sm js-delete" data-id="' + item.id + '">Delete</button>';
                         var rows = "<tr>"
                             + "<td>" + item.nameEn + "</td>"
@@ -229,8 +268,8 @@
                 error: function (xhr, status, error) {
                     Swal.fire({
                         title: 'Error!',
-                        text: 'An error occurred while processing your request.',
-                        icon: 'error',
+                        text: xhr.responseJSON.message,
+                        icon: 'warning',
                         confirmButtonText: 'OK'
                     }).then(() => {
                         console.error(xhr, status, error);
@@ -240,6 +279,96 @@
 
             return false;
         }
+
+        var model ;
+        function editRow(id) {
+
+            $.ajax({
+                type: "get",
+                url: "/api/ListApi/GetById",
+                contentType: "application/json",
+                data: {id: id},
+                success: function (data) {
+                    console.log(data);
+                    model = data;
+                    $('#editNameEn').val(data.nameEn);
+                    $('#editNameAr').val(data.nameAr);
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors (e.g., show an error message)
+                    Swal.fire({
+                        title: 'Error!',
+                        text: xhr.responseJSON.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+
+            // Show the modal or form
+            //$("#editModal").modal("show");
+
+            
+        }
+
+        
+        // Handle the edit submission
+        $("#editSubmitBtn").click(function () {
+            // Get the updated values
+            var updatedNameEn = $("#editNameEn").val().trim();
+            var updatedNameAr = $("#editNameAr").val().trim();
+            console.log(updatedNameAr);
+            // Check if the input fields are empty
+            if (updatedNameEn === '' || updatedNameAr === '') {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please fill in both fields!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return; // Prevent the form from submitting if fields are empty
+            }
+
+            // Create an object to hold the updated item data
+            var updatedItem = {
+                Id: model.id, // The ID of the item to edit
+                NameEn: updatedNameEn,
+                NameAr: updatedNameAr
+            };
+            console.log(model);
+            // Send an AJAX request to update the item
+            $.ajax({
+                type: "POST",
+                async: true,
+                url: "/api/ListApi/Edit", // Use the correct URL
+                contentType: "application/json",
+                data: JSON.stringify(updatedItem),
+                success: function (data) {
+                    // Handle success (e.g., close the modal, refresh the table)
+                    LoadData(); // Reload the table data
+                    $("#editModal").modal("hide"); // Close the modal
+                    console.log(data);
+                    Swal.fire({
+                        title: 'Success!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors (e.g., show an error message)
+                    Swal.fire({
+                        title: 'Error!',
+                        text: xhr.responseJSON.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+
+        
+
     </script>
 
 
